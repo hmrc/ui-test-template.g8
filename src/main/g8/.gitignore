@@ -34,7 +34,7 @@ test-result
 tmp
 *.class
 *.html
-browserConfig.properties
+*.properties
 BrowserStackLocal*
 ZAP*
 
