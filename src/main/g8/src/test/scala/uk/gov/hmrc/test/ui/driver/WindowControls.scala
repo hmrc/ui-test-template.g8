@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.gov.hmrc.test.ui.runner
+package uk.gov.hmrc.test.ui.driver
 
-import cucumber.api.CucumberOptions
-import cucumber.api.junit.Cucumber
-import org.junit.runner.RunWith
+import org.openqa.selenium.WebDriver
 
-@RunWith(classOf[Cucumber])
-@CucumberOptions(
-  features = Array("src/test/resources/features"),
-  glue = Array("uk.gov.hmrc.test.ui.cucumber.stepdefs"),
-  plugin = Array ("pretty", "html:target/cucumber", "json:target/cucumber.json"),
-  tags = Array("@Example, @Shutdown")
-)
-class Runner {
+import scala.collection.JavaConversions._
+
+trait WindowControls {
+  val instance: WebDriver
+  lazy val baseWindowHandle: String = instance.getWindowHandle
+
+  def closeExtraWindows(): Unit = {
+    instance.getWindowHandles.toList
+      .filter(handle => handle != baseWindowHandle)
+      .foreach(instance.switchTo().window(_).close())
+    instance.switchTo().window(baseWindowHandle)
+  }
 }

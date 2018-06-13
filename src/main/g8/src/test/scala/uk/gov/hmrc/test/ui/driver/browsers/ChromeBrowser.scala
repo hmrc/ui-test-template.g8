@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.gov.hmrc.test.ui.runner.driver.browsers
+package uk.gov.hmrc.test.ui.driver.browsers
 
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.{ChromeDriver, ChromeOptions}
 import org.openqa.selenium.remote.{CapabilityType, DesiredCapabilities}
-import uk.gov.hmrc.test.ui.runner.driver.ProxySupport
+import uk.gov.hmrc.test.ui.driver.ProxySupport
 
 object ChromeBrowser extends ProxySupport {
 

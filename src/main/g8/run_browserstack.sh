@@ -22,5 +22,5 @@ declare -a setups=("BS_Win10_Chrome_v64")
 
 for setup in "\${setups[@]}"; do
     echo "Loading config from \$setup.json"
-    sbt -Dlogback.configurationFile=logback.xml -Dbrowser=browserstack -DtestDevice="\$setup" -Denvironment="\$ENV" 'test-only uk.gov.hmrc.test.ui.runner.RunnerBrowserStackTests'
+    sbt -Dlogback.configurationFile=logback.xml -Dbrowser=browserstack -DtestDevice="\$setup" -Denvironment="\$ENV" 'test-only uk.gov.hmrc.test.ui.cucumber.runner.RunnerBrowserStackTests'
 done

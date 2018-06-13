@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.gov.hmrc.test.ui.runner.driver
+package uk.gov.hmrc.test.ui.driver
 
 import com.typesafe.scalalogging.LazyLogging
 import org.openqa.selenium.WebDriver
-import uk.gov.hmrc.test.ui.runner.driver.browsers._
+import uk.gov.hmrc.test.ui.driver.browsers._
 
 object Driver extends LazyLogging with WindowControls {
 

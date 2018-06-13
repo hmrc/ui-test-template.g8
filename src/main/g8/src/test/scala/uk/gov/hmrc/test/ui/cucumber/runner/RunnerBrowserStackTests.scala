@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.gov.hmrc.test.ui.runner
+package uk.gov.hmrc.test.ui.cucumber.runner
 
 import cucumber.api.CucumberOptions
 import cucumber.api.junit.Cucumber

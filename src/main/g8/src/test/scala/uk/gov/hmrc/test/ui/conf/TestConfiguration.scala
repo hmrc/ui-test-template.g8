@@ -19,7 +19,7 @@ import java.io.FileInputStream
 import java.util.Properties
 
 object TestConfiguration {
-  val fis = new FileInputStream("src/test/resources/environments.properties")
+  val fis = new FileInputStream("src/test/resources/environment.properties")
   val props: Properties = new Properties()
   loadProperties(fis, props)
 

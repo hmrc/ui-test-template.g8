@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.gov.hmrc.test.ui.runner
+package uk.gov.hmrc.test.ui.cucumber.runner
 
 import cucumber.api.CucumberOptions
 import cucumber.api.junit.Cucumber
@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
   features = Array("src/test/resources/features"),
   glue = Array("uk.gov.hmrc.test.ui.cucumber.stepdefs"),
   plugin = Array ("pretty", "html:target/cucumber", "json:target/cucumber.json"),
-  tags = Array("@Smoke, @Shutdown")
+  tags = Array("@Example, @Shutdown")
 )
-class RunnerQA {
+class Runner {
 }
