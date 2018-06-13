@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package uk.gov.hmrc.test.ui.runner.driver
 
-package uk.gov.hmrc.integration.cucumber.pages
+import org.openqa.selenium.WebDriver
 
-object ExamplePage extends BasePage {
-  val url    = "/gg-sign-in"
-  val header = "Authority Wizard"
-  val credId = "123456"
+import scala.collection.JavaConversions._
+
+trait WindowControls {
+  val instance: WebDriver
+  lazy val baseWindowHandle: String = instance.getWindowHandle
+
+  def closeExtraWindows(): Unit = {
+    instance.getWindowHandles.toList
+      .filter(handle => handle != baseWindowHandle)
+      .foreach(instance.switchTo().window(_).close())
+    instance.switchTo().window(baseWindowHandle)
+  }
 }

@@ -68,7 +68,7 @@ These scripts use sudo to get the right permissions so you will likely be prompt
 ###  Project structure
 Each part of the application's functionality is described by feature files. The feature files are arranged into folders inside src/test/features and grouped into the main areas of the application.
 
-Each step of the feature files is defined by executable test steps in the scala code inside the src/test/scala/uk/gov/hmrc/integration/test/stepdefs package and those utilise Page object models inside src/test/scala/uk/gov/hmrc/integration/cucumber/pages which are the single place where page specific properties and variables are configured.
+Each step of the feature files is defined by executable test steps in the scala code inside the src/test/scala/uk/gov/hmrc/test/ui/cucumber/stepdefs package and those utilise Page object models inside src/test/scala/uk/gov/hmrc/ui/test/pages which are the single place where page specific properties and variables are configured.
 
 ###  Example Feature
 The example feature calls the Authority Wizard page and relies on the following services being started:
