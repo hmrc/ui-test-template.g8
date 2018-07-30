@@ -22,6 +22,7 @@ libraryDependencies ++= Seq(
   "com.novocode" % "junit-interface" % "0.11" % "test",
   "net.lightbody.bmp" % "browsermob-core" % "2.1.5",
   "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.8.0"
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.8.0",
+  "com.typesafe" % "config" % "1.3.2"
   )
 
