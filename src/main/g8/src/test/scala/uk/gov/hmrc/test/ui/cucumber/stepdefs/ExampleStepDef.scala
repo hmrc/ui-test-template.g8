@@ -27,7 +27,7 @@ class ExampleStepDef extends ScalaDsl with EN {
 
   When("""^they enter valid auth criteria\$""") { () =>
     sendKeysByName("authorityId", credId)
-    sendKeysByName("redirectionUrl", s"/\$prodRoute\$url")
+    sendKeysByName("redirectionUrl", url)
     clickByCSS("Input[value='Submit']")
   }
 

@@ -15,30 +15,25 @@
  */
 package uk.gov.hmrc.test.ui.conf
 
-import java.io.FileInputStream
-import java.util.Properties
+import com.typesafe.config.{Config, ConfigFactory}
 
 object TestConfiguration {
-  val fis = new FileInputStream("src/test/resources/environment.properties")
-  val props: Properties = new Properties()
-  loadProperties(fis, props)
+  val config: Config = ConfigFactory.load()
+  val env: String = config.getString("environment")
+  val defaultConfig: Config = config.getConfig("local")
+  val envConfig: Config = config.getConfig(env).withFallback(defaultConfig)
 
-  def loadProperties(aFis: FileInputStream, aProps: Properties) = {
-    try {aProps.load(aFis)}
-    catch {case e: Exception => println("Exception loading file")}
-    finally {
-      if (aFis != null) {
-        try {aFis.close()}
-        catch {case e: Exception => println("Exception on closing file")}
-      }
+  def url(service: String): String = {
+    val host = env match {
+      case "local" => s"\$environmentHost:\${servicePort(service)}"
+      case _ => s"\${envConfig.getString(s"services.host")}"
     }
+    s"\$host\${serviceRoute(service)}"
   }
 
-  def getProperty(key: String, aProps: Properties = props): String = {
-    try {
-      val utf8Property = new String(aProps.getProperty(key).getBytes("ISO-8859-1"), "UTF-8")
-      utf8Property.replaceAll("''","'")
-    }
-    catch {case e: Exception => "Exception getting property"}
-  }
+  def environmentHost: String = envConfig.getString("services.host")
+
+  def servicePort(serviceName: String): String = envConfig.getString(s"services.\$serviceName.port")
+
+  def serviceRoute(serviceName: String): String = envConfig.getString(s"services.\$serviceName.productionRoute")
 }

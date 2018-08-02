@@ -15,8 +15,10 @@
  */
 package uk.gov.hmrc.test.ui.pages
 
+import uk.gov.hmrc.test.ui.conf.TestConfiguration
+
 object ExamplePage extends BasePage {
-  val url    = "/gg-sign-in"
+  val url = TestConfiguration.url("auth-login-stub") + "/gg-sign-in"
   val header = "Authority Wizard"
   val credId = "123456"
 }

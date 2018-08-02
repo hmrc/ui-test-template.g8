@@ -23,7 +23,6 @@ import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait, Select}
 import org.openqa.selenium.{By, NoAlertPresentException, WebDriver}
 import org.scalatest.Matchers
 import uk.gov.hmrc.test.ui.driver.Driver
-import uk.gov.hmrc.test.ui.conf.TestConfiguration.getProperty
 
 object BasePage extends BasePage {
   val url = "DEFAULT"
@@ -35,24 +34,9 @@ trait BasePage extends Matchers {
   val url: String
   val header: String
 
-  val frontendPort = "$frontendServicePort$"
-  val prodRoute = "$productionRoute$"
-
-  val basePageUrl = s"\$envUrl/\$prodRoute"
-
   val driver: WebDriver = Driver.instance
-  lazy val qaUrl: String = getProperty("qa.url")
 
-  def envUrl: String = {
-    val environmentProperty = System.getProperty("environment", "local").toLowerCase
-    environmentProperty match {
-      case "local" => s"http://localhost:\$frontendPort"
-      case "qa" => qaUrl
-      case _ => throw new IllegalArgumentException(s"Environment '\$environmentProperty' not known")
-    }
-  }
-
-  def goToPage() = driver.navigate().to(basePageUrl + url)
+  def goToPage() = driver.navigate().to(url)
 
   val fluentWait: FluentWait[WebDriver] = new FluentWait[WebDriver](driver)
     .withTimeout(20, TimeUnit.SECONDS)
@@ -78,7 +62,7 @@ trait BasePage extends Matchers {
   }
 
   def navigateTo(url: String) = driver.navigate().to(url)
-  def navTo(url: String) = navigateTo(basePageUrl + url)
+  def navTo(url: String) = navigateTo(url)
 
   def getTextById(id: String) = findById(id).getText
 
@@ -97,7 +81,7 @@ trait BasePage extends Matchers {
   def verifyInputUsingElementId(elementId: String, expectedValue: String)= findById(elementId).getAttribute("value") shouldBe expectedValue
 
   def verifyHyperlink(linkText: String) = findByCSS("a[title*=\"" + linkText + "\"]")
-  def verifyHyperlinkTarget(id: String, target: String) = Assert.assertEquals(findById(id).getAttribute("href"), basePageUrl+"/"+target)
+//  def verifyHyperlinkTarget(id: String, target: String) = Assert.assertEquals(findById(id).getAttribute("href"), basePageUrl+"/"+target)
 
   def sendKeysById(id: String, value: String) = {
     findById(id).clear()
