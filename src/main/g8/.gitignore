@@ -8,7 +8,6 @@ logs
 /.settings
 *.DS_Store
 /.project
-/.g8
 
 # IDE files
 /.idea
