@@ -80,14 +80,21 @@ The example feature calls the Authority Wizard page and relies on the following 
     USER_DETAILS
 
 ### Browser Testing
-In order to run the tests via BrowserStack you need to update\create the following file with your BrowserStack username and automate key (this is _not_ your password):
+In order to run the tests via BrowserStack you will need to apply the BrowserStack scaffold to your new project using the following command:
 
-(path to repository)**/src/test/resources/browserConfig.properties**
+```sbtshell
+sbt 'g8Scaffold browserstack'
+```
 
-     username=
-     automatekey=
+This will overlay the contents of the `.g8/browserstack` project folder into the project.  Once done, you will need to create a properties file (**./src/test/resources/browserConfig.properties**) containing your BrowserStack username and automate key (this is _not_ your password):
+
+```properties
+username=
+automatekey=
+```
 
 To get your username and automate key go [here](https://www.browserstack.com/accounts/settings)
+
 Alternatively if you access [www.browserstack.com/automate](http://www.browserstack.com/automate) and select **Username and Access Keys** on the left tab your credentials will be displayed
 
 >**Note:** The settings page displays the automate key as the access key.

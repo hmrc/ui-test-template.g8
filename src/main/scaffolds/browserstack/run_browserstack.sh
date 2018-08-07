@@ -22,5 +22,13 @@ declare -a setups=("BS_Win10_Chrome_v64")
 
 for setup in "\${setups[@]}"; do
     echo "Loading config from \$setup.json"
-    sbt -Dlogback.configurationFile=logback.xml -Dbrowser=browserstack -DtestDevice="\$setup" -Denvironment="\$ENV" 'test-only uk.gov.hmrc.test.ui.cucumber.runner.RunnerBrowserStackTests'
+
+    echo "######################################################################################"
+    echo "# SPEC NOT IMPLEMENTED: You must implement a test spec for this script to run."
+    echo "#"
+    echo "# See template project README for details: https://github.com/hmrc/ui-test-template.g8"
+    echo "######################################################################################"
+    exit 1
+
+    sbt -Dlogback.configurationFile=logback.xml -Dbrowser=browserstack -DtestDevice="\$setup" -Denvironment="\$ENV" 'test-only does.not.exist.SpecRunner'
 done

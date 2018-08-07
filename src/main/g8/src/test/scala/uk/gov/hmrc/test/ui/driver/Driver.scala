@@ -26,7 +26,6 @@ object Driver extends LazyLogging with WindowControls {
       case Some("chrome") => ChromeBrowser.initialise(javascriptEnabled, sys.props.contains("headless"))
       case Some("chrome-headless") => ChromeBrowser.initialise(javascriptEnabled, headlessMode = true)
       case Some("firefox") => FirefoxBrowser.initialise(javascriptEnabled)
-      case Some("browserstack") => BrowserStack.initialise()
       case Some(name) => sys.error(s"'browser' property '\$name' not recognised.")
       case None => {
         logger.warn("'browser' property is not set, defaulting to 'chrome'")
