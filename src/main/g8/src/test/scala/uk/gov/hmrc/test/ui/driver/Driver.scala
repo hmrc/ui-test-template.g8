@@ -46,3 +46,7 @@ object Driver extends LazyLogging with WindowControls {
     }
   }
 }
+
+trait BrowserDriver {
+  implicit lazy val driver: WebDriver = Driver.instance
+}

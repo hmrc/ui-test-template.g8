@@ -1,0 +1,28 @@
+package uk.gov.hmrc.test.ui.spec
+
+import org.scalatest.concurrent.Eventually
+import org.scalatest.selenium.WebBrowser
+import org.scalatest.{BeforeAndAfterAll, FeatureSpec, GivenWhenThen, Matchers}
+import uk.gov.hmrc.test.ui.driver.BrowserDriver
+
+import scala.util.Try
+
+trait BaseSpec extends FeatureSpec
+  with GivenWhenThen
+  with BeforeAndAfterAll
+  with Matchers
+  with WebBrowser
+  with BrowserDriver
+  with Eventually{
+
+  override def beforeAll() {
+    super.beforeAll()
+    sys.addShutdownHook {
+      Try(driver.quit())
+    }
+  }
+
+  override def afterAll() {
+    Try(driver.quit())
+  }
+}
