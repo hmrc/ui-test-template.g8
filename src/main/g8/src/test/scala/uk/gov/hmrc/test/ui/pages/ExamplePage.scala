@@ -15,9 +15,7 @@
  */
 package uk.gov.hmrc.test.ui.pages
 
-$if(!cucumber.truthy)$
-import org.openqa.selenium.WebDriver
-$endif$
+$if(cucumber.truthy)$
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object ExamplePage extends BasePage {
@@ -25,10 +23,20 @@ object ExamplePage extends BasePage {
   val url: String = TestConfiguration.url("auth-login-stub") + "/gg-sign-in"
   val title = "Authority Wizard"
 
-  $if(!cucumber.truthy)$
-  def login(redirectionUrl: String)(implicit driver: WebDriver): Unit = {
-  textField("redirectionUrl").value = redirectionUrl
-  submit()
-  }
-  $endif$
 }
+$else$
+import org.openqa.selenium.WebDriver
+import uk.gov.hmrc.test.ui.conf.TestConfiguration
+
+object ExamplePage extends BasePage {
+
+  val url: String = TestConfiguration.url("auth-login-stub") + "/gg-sign-in"
+  val title = "Authority Wizard"
+
+  def login(redirectionUrl: String)(implicit driver: WebDriver): Unit = {
+    textField("redirectionUrl").value = redirectionUrl
+    submit()
+  }
+}
+$endif$
+
