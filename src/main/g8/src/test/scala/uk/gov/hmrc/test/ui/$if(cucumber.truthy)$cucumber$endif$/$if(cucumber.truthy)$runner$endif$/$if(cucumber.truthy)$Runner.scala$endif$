@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.cucumber.runner
 
-import cucumber.api.scala.{EN, ScalaDsl}
-import uk.gov.hmrc.test.ui.pages.BasePage._
+import cucumber.api.CucumberOptions
+import cucumber.api.junit.Cucumber
+import org.junit.runner.RunWith
 
-class BaseStepDef extends ScalaDsl with EN {
-
-  And("""^The user refreshes the page\$""") { () =>
-    pageRefresh()
-  }
-
-  And("""^the (Continue|Submit) button is clicked\$""") { () =>
-    clickContinue()
-  }
-
-  Then("""^the browser is shutdown\$""") { () =>
-    ShutdownTest()
-  }
-
-
+@RunWith(classOf[Cucumber])
+@CucumberOptions(
+  features = Array("src/test/resources/features"),
+  glue = Array("uk.gov.hmrc.test.ui.cucumber.stepdefs"),
+  plugin = Array ("pretty", "html:target/cucumber", "json:target/cucumber.json"),
+  tags = Array("@Example")
+)
+class Runner {
 }

@@ -1,0 +1,37 @@
+package uk.gov.hmrc.test.ui.specs
+
+import uk.gov.hmrc.test.ui.pages.{ExamplePage, PayOnlinePage}
+import uk.gov.hmrc.test.ui.spec.BaseSpec
+
+class ExampleSpec extends BaseSpec {
+
+  info("Example Spec using ScalaTest")
+
+  feature("Logged in user accessing payments page") {
+
+    scenario("A logged in user is able to access payment details page") {
+
+      Given("A logged in user accesses payments page")
+
+      go to ExamplePage
+      pageTitle shouldBe ExamplePage.title
+      ExamplePage.login(PayOnlinePage.url)
+
+      eventually {
+        pageTitle shouldBe PayOnlinePage.title
+      }
+
+      linkText("Sign out").webElement.isDisplayed
+
+      When("User chooses to pay VAT tax")
+      click on radioButton("vat")
+      submit()
+      eventually {
+        pageTitle shouldBe "Your payment details - Pay a tax bill - Gov.UK"
+      }
+
+      Then("Payment details page is displayed")
+      tagName("h1").element.text shouldBe "Your payment details"
+    }
+  }
+}

@@ -5,7 +5,6 @@ This repository can be used by teams who are building a new service that will ne
 
 It is built using:
 
-* Cucumber 1.2.4
 * Java 1.8
 * Scala 2.11.7
 * sbt 0.13.16
@@ -15,7 +14,6 @@ By default, it supports the following browsers:
 
 * Chrome
 * Firefox
-* BrowserStack
 
 ### Support
 This repository is supported by the Test Community for any information on how to use it, or if you'd like any help please come to #community-testing in Slack.
@@ -31,16 +29,21 @@ To ensure your changes haven't broken the template, you can run the following co
     ./run_local.sh
 
 ### How to use this template
-This template can be used from the command line, simply by executing `sbt new hmrc/ui-test-template.g8`
-You will then be prompted for 3 pieces of information
 
-Name -> The name of the frontend you wish to test (eg. paye-frontend)
+giter8 is required to generate a test suite from ui-test-template. Due to the limitations in SBT giter8 plugin, this template cannot be generated with SBT. 
 
-Port -> The port you would run the service on locally or with service manager
+giter8 can be installed from [here](http://www.foundweekends.org/giter8/setup.html).
 
-Production Route -> The segment of the url that follows the domain (eg. `.uk` or the port)
+To generate a test suite, execute the command `g8 hmrc/ui-test-template.g8`
 
-This will produce a blank template with all the basic requirements needed for ui tests in your current directory.
+This will then prompt for:
+
+**name** -> The name of the test suite
+
+**cucumber** -> An optional boolean property to determine if the test suite will use Cucumber or ScalaTest FeatureSpec. True would provide the required Cucumber dependencies and examples.
+            False would provide the relevant ScalaTest FeatureSpec files. The default value for `cucumber` is set to false and hence will use ScalaTest FeatureSpec.
+
+Answering these questions will result in a blank test suite with all the basic requirements needed for ui tests in your current directory.
 
 We _always_ keep UI driven tests to a minimum, preferring instead to drive tests down into Unit and Integration layers. Please read the MDTP Test Approach for more details.
 
@@ -65,19 +68,15 @@ These scripts use sudo to get the right permissions so you will likely be prompt
 
 **Note** you will need up to date versions of Firefox and Chrome installed on your device to be able to use these drivers.
 
-###  Project structure
-Each part of the application's functionality is described by feature files. The feature files are arranged into folders inside src/test/features and grouped into the main areas of the application.
-
-Each step of the feature files is defined by executable test steps in the scala code inside the src/test/scala/uk/gov/hmrc/test/ui/cucumber/stepdefs package and those utilise Page object models inside src/test/scala/uk/gov/hmrc/test/ui/pages which are the single place where page specific properties and variables are configured.
-
 ###  Example Feature
-The example feature calls the Authority Wizard page and relies on the following services being started:
+The example test calls the Authority Wizard page and relies on the following services being started:
 
     ASSETS_FRONTEND
     AUTH
     AUTH_LOGIN_API
     AUTH_LOGIN_STUB
     USER_DETAILS
+    PAYMENTS_FRONTEND
 
 ### Browser Testing
 In order to run the tests via BrowserStack you will need to apply the BrowserStack scaffold to your new project using the following command:
