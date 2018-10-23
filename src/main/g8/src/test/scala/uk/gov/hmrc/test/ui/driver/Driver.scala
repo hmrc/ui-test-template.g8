@@ -18,12 +18,13 @@ package uk.gov.hmrc.test.ui.driver
 import java.net.URL
 
 import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.{MutableCapabilities, WebDriver}
+import org.openqa.selenium.{MutableCapabilities, Proxy, WebDriver}
 import org.openqa.selenium.chrome.{ChromeDriver, ChromeOptions}
 import org.openqa.selenium.firefox.{FirefoxDriver, FirefoxOptions, FirefoxProfile}
-import org.openqa.selenium.remote.{CapabilityType, DesiredCapabilities, RemoteWebDriver}
+import org.openqa.selenium.remote.{CapabilityType, RemoteWebDriver}
+import uk.gov.hmrc.test.ui.conf.TestConfiguration._
 
-object Driver extends LazyLogging with WindowControls with ProxySupport {
+object Driver extends LazyLogging with WindowControls {
 
   private val defaultSeleniumHubUrl: String = s"http://localhost:4444/wd/hub"
 
@@ -34,7 +35,7 @@ object Driver extends LazyLogging with WindowControls with ProxySupport {
       case Some("firefox") => firefoxInstance(firefoxOptions)
       case Some("remote-chrome") => remoteWebdriverInstance(chromeOptions)
       case Some("remote-firefox") => remoteWebdriverInstance(firefoxOptions)
-      case Some(name) => sys.error(s"'browser' property '$name' not recognised.")
+      case Some(name) => sys.error(s"'browser' property '\$name' not recognised.")
       case None => {
         logger.warn("'browser' property is not set, defaulting to 'chrome'")
         chromeInstance(chromeOptions)
@@ -61,17 +62,14 @@ object Driver extends LazyLogging with WindowControls with ProxySupport {
   }
 
   private def chromeOptions: ChromeOptions = {
-    val capabilities: DesiredCapabilities = DesiredCapabilities.chrome()
-    if (Option(System.getProperty("qa.proxy")).isDefined) capabilities.setCapability(CapabilityType.PROXY, initialiseProxy())
-
     val options = new ChromeOptions()
+    if (proxyRequired) options.setCapability(CapabilityType.PROXY, proxyConfiguration)
     options.addArguments("test-type")
     options.addArguments("--no-sandbox")
     options.addArguments("start-maximized")
     options.addArguments("disable-infobars")
     options.setCapability("takesScreenshot", true)
     options.setCapability("javascript.enabled", javascriptEnabled)
-    options.merge(capabilities)
 
     options
   }
@@ -81,9 +79,8 @@ object Driver extends LazyLogging with WindowControls with ProxySupport {
     profile.setAcceptUntrustedCertificates(true)
     profile.setPreference("javascript.enabled", javascriptEnabled)
 
-    val capabilities = DesiredCapabilities.firefox()
     val options = new FirefoxOptions()
-    options.merge(capabilities)
+    if(proxyRequired) options.setCapability(CapabilityType.PROXY, proxyConfiguration)
     options.setProfile(profile)
     options.setAcceptInsecureCerts(true)
 
@@ -100,6 +97,10 @@ object Driver extends LazyLogging with WindowControls with ProxySupport {
         true
       }
     }
+  }
+
+  private def proxyConfiguration: Proxy = {
+    new Proxy().setHttpProxy(proxyConnectionString)
   }
 }
 
