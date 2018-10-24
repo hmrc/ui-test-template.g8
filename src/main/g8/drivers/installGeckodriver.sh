@@ -5,7 +5,7 @@ OS="linux64"
 #OS="macos"
 
 #These match the configuration on Jenkins - you should only have to adjust these values when the platform makes changes
-GECKO_VERSION="0.19.1"
+GECKO_VERSION="0.21.0"
 GECKO_PARENT_DIR="/usr/local/bin/"
 
 GECKO_DOWNLOAD_URL="https://github.com/mozilla/geckodriver/releases/download/v\${GECKO_VERSION}/geckodriver-v\${GECKO_VERSION}-\${OS}.tar.gz"
