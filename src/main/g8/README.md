@@ -1,69 +1,52 @@
+**This is a template README.md.  Be sure to update this with project specific content that describes your ui test project.**
 
 # $name$
+The $name$ ui test project.  
 
-This repository can be used by teams who are building a new service that will need browser driven tests.
+## Running the tests
 
-It is built using:
+Prior to executing the tests ensure you have the appropriate [drivers installed](#install-driver-binary), install [MongoDB](https://docs.mongodb.com/manual/installation/) and install/configure [service manager](https://github.com/hmrc/service-manager).  
 
-* Cucumber 1.2.4
-* Java 1.8
-* Scala 2.11.7
-* sbt 0.13.16
-
-By default, it supports the following browsers:
-
-* Chrome
-* Firefox
-* BrowserStack
-
-### Support
-This repository is supported by the Test Community for any information on how to use it, or if you'd like any help please come to #community-testing in Slack.
-
-### Contributions
-If you'd like to contribute, please raise a PR and notify us in #community-testing - one of the core maintainers will take a look and merge the PR.
-
-### Testing your contributions
-To ensure your changes haven't broken the template, you can run the following commands locally before submitting your PR:
+Run the following command to start services locally:
 
     sudo mongod
-    sm --start ACCEPTANCE_TEST_TEMPLATE -f
-    ./run_local.sh
+    sm --start UI_TEST_TEMPLATE
 
-### How to use this template
+Then execute the `run_tests.sh` script:
+    
+    ./run_tests.sh <environment> <browser-driver>
 
-We _always_ keep UI driven tests to a minimum, preferring instead to drive tests down into Unit and Integration layers. Please read the MDTP Test Approach for more details.
-
-Additionally, we want you to make smart choices that suit your project and team - if this template doesn't work for you please go ahead and implement your tests without using it! Or, come to #community-testing and we can chat about how you can best solve your issues.
-
-To be able to execute tests with this template you will need Geckodriver and/or Chromedriver to run against a local installation of Chrome or Firefox. If you have a Mac, you can simply use homebrew to install these drivers:
-
-
-    brew install geckodriver
-    brew install chromedriver
-
-If you don't have homebrew installed, follow the guidance on https://brew.sh/
-
-For anyone using an Ubuntu device, we created helpful scripts to do the installation work for you. These can be found in the drivers/ directory of this template and can be executed on the command line. From the root directory of the project, simply execute on of the following scripts:
+The `run_tests.sh` script defaults to the `local` environment with the locally installed `chrome` driver binary.  For a complete list of supported param values, see:
+ - `src/test/resources/application.conf` for **environment** 
+ - `src/test/scala/uk/gov/hmrc/test/ui/driver/Driver.scala` for **browser-driver**
 
 
-    drivers/installGeckodriver.sh
-    drivers/installChromedriver.sh
+## [Installing local driver binaries](#install-driver-binaries)
 
+This project supports UI test execution using Firefox (Geckodriver) and Chrome (Chromedriver) browsers. 
 
-These scripts use sudo to get the right permissions so you will likely be prompted to enter your password.
+See the `drivers/` directory for some helpful scripts to do the installation work for you.  They should work on both Mac and Linux by running the following command:
 
-**Note** you will need up to date versions of Firefox and Chrome installed on your device to be able to use these drivers.
+    ./installGeckodriver.sh <operating-system> <driver-version>
+    or
+    ./installChromedriver <operating-system> <driver-version>
 
-###  Project structure
-Each part of the application's functionality is described by feature files. The feature files are arranged into folders inside src/test/features and grouped into the main areas of the application.
+- *<operating-system>* defaults to **linux64**, however it also supports **macos**
+- *<driver-version>* defaults to **0.19.1** for Gecko/Firefox, and the latest release for Chrome.  You can, however, however pass any version available at the [Geckodriver]() or [Chromedriver](http://chromedriver.storage.googleapis.com/) repositories.
 
-Each step of the feature files is defined by executable test steps in the scala code inside the src/test/scala/uk/gov/hmrc/test/ui/cucumber/stepdefs package and those utilise Page object models inside src/test/scala/uk/gov/hmrc/test/ui/pages which are the single place where page specific properties and variables are configured.
+**Note 1:** *You will need to ensure that you have a recent version of Chrome and/or Firefox installed for the later versions of the drivers to work reliably.*
 
-###  Example Feature
-The example feature calls the Authority Wizard page and relies on the following services being started:
+**Note 2** *These scripts use sudo to set the right permissions on the drivers so you will likely be prompted to enter your password.*
 
-    ASSETS_FRONTEND
-    AUTH
-    AUTH_LOGIN_API
-    AUTH_LOGIN_STUB
-    USER_DETAILS
+## Applying Scaffolds
+This repo comes with scaffolds that are located in the project's `scaffolds/` directory.  
+
+At present only BrowserStack support is provided via g8 scaffolds.  This can be applied to the repo by running the following command from the project root directory:
+
+```sbtshell
+sbt 'g8Scaffold browserstack'
+```
+
+Feel free to delete the `scaffolds/` directory if you have no need for BrowserStack.
+
+More information on the supported Scaffolds can be found in the [ui-test-template.g8 github README.md](https://github.com/hmrc/ui-test-template.g8/blob/master/README.md).
