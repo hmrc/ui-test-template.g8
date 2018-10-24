@@ -1,7 +1,7 @@
 **This is a template README.md.  Be sure to update this with project specific content that describes your ui test project.**
 
 # $name$
-The $name$ ui test project.  
+UI test suite for the `<digital service name>` using WebDriver and `<scalatest/cucumber>`.  
 
 ## Running the tests
 
@@ -32,7 +32,7 @@ See the `drivers/` directory for some helpful scripts to do the installation wor
     ./installChromedriver <operating-system> <driver-version>
 
 - *<operating-system>* defaults to **linux64**, however it also supports **macos**
-- *<driver-version>* defaults to **0.19.1** for Gecko/Firefox, and the latest release for Chrome.  You can, however, however pass any version available at the [Geckodriver]() or [Chromedriver](http://chromedriver.storage.googleapis.com/) repositories.
+- *<driver-version>* defaults to **0.21.0** for Gecko/Firefox, and the latest release for Chrome.  You can, however, however pass any version available at the [Geckodriver](https://github.com/mozilla/geckodriver/tags) or [Chromedriver](http://chromedriver.storage.googleapis.com/) repositories.
 
 **Note 1:** *You will need to ensure that you have a recent version of Chrome and/or Firefox installed for the later versions of the drivers to work reliably.*
 

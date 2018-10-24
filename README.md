@@ -1,75 +1,50 @@
 
 # ui-test-template
 
-This repository can be used by teams who are building a new service that will need browser driven tests.
+This repository can be used by teams who are in need of a UI test suite that verifies interactions between multiple frontend services.  If your tests' scope is limited to a single frontend service this **might** not be the template for you.  While it will still serve as a good reference, you may want to consider writting your UI tests in the same git repository as the service under test.  
 
-It is built using:
-
+The ui-test-template.g8 is developed and tested using:
 * Java 1.8
 * Scala 2.11.7
 * sbt 0.13.16
 * giter8 0.11.0-M3
 
-By default, it supports the following browsers:
-
+It supports UI testing with the following **browsers** (local driver binary and selenium-docker container):
 * Chrome
 * Firefox
 
-### Support
-This repository is supported by the Test Community for any information on how to use it, or if you'd like any help please come to #community-testing in Slack.
+Using the following **test execution frameworks**:
+* Scalatest
+* Cucumber
 
-### Contributions
-If you'd like to contribute, please raise a PR and notify us in #community-testing - one of the core maintainers will take a look and merge the PR.
+And also supports execution of tests using BrowserStack.
 
-### Testing your contributions
-To ensure your changes haven't broken the template, you can run the following commands locally before submitting your PR:
+## Support
+This repository is supported by HMRC Digital's Test Community.  If you have a query or find an issue please drop in to the #community-testing channel in Slack.
 
-    sudo mongod
-    sm --start ACCEPTANCE_TEST_TEMPLATE -f
-    ./run_local.sh
+## Contributions
+If you'd like to contribute we welcome you to raise a PR or issue against the project and notify one of the core maintainers in #community-testing.
 
-### How to use this template
+## Generating a UI Test project
 
-giter8 is required to generate a test suite from ui-test-template. Due to the limitations in SBT giter8 plugin, this template cannot be generated with SBT. 
+### [Install giter8 CLI](#install-giterate) 
+You will need to have giter8 installed in order to generate a test suite from ui-test-template. Due to some limitations with the SBT giter8 plugin, unfortunately this template will not generate successfully. 
 
-giter8 can be installed from [here](http://www.foundweekends.org/giter8/setup.html).
+Instructions to install giter8 can be found [here](http://www.foundweekends.org/giter8/setup.html).
 
-To generate a test suite, execute the command `g8 hmrc/ui-test-template.g8`
+### Generating a UI Test project from master
+To generate a test suite, execute the following command 
+    
+    g8 hmrc/ui-test-template.g8
 
-This will then prompt for:
+This will prompt you for:
+- **name** -> The name of the ui test repository.  I.e. my-digital-service-ui-tests
+- **cucumber** -> [OPTIONAL] A Boolean property which defaults to `false` (Scalatest).  Selecting `true` will provide you with all the required dependencies to run Cucumber, as well as example StepDef and TestRunner objects.
 
-**name** -> The name of the test suite
-
-**cucumber** -> An optional boolean property to determine if the test suite will use Cucumber or ScalaTest FeatureSpec. True would provide the required Cucumber dependencies and examples.
-            False would provide the relevant ScalaTest FeatureSpec files. The default value for `cucumber` is set to false and hence will use ScalaTest FeatureSpec.
-
-Answering these questions will result in a blank test suite with all the basic requirements needed for ui tests in your current directory.
-
-We _always_ keep UI driven tests to a minimum, preferring instead to drive tests down into Unit and Integration layers. Please read the MDTP Test Approach for more details.
-
-Additionally, we want you to make smart choices that suit your project and team - if this template doesn't work for you please go ahead and implement your tests without using it! Or, come to #community-testing and we can chat about how you can best solve your issues.
-
-To be able to execute tests with this template you will need Geckodriver and/or Chromedriver to run against a local installation of Chrome or Firefox. If you have a Mac, you can simply use homebrew to install these drivers:
-
-
-    brew install geckodriver
-    brew install chromedriver
-
-If you don't have homebrew installed, follow the guidance on https://brew.sh/
-
-For anyone using an Ubuntu device, we created helpful scripts to do the installation work for you. These can be found in the drivers/ directory of this template and can be executed on the command line. From the root directory of the project, simply execute on of the following scripts:
-
-
-    drivers/installGeckodriver.sh
-    drivers/installChromedriver.sh
-
-
-These scripts use sudo to get the right permissions so you will likely be prompted to enter your password.
-
-**Note** you will need up to date versions of Firefox and Chrome installed on your device to be able to use these drivers.
+Upon Answering these questions will result in a blank test suite with all the basic requirements needed for ui tests in your current directory.
 
 ###  Example Feature
-The example test calls the Authority Wizard page and relies on the following services being started:
+The example test is quite limited in what it does.  It calls the Authority Wizard page to authenticate with and redirect to the PAYMENTS_FRONTEND, then completes a simple VAT Registraion journey.  This depends on the services in the `UI_TEST_TEMPLATE` being available:
 
     ASSETS_FRONTEND
     AUTH
@@ -77,15 +52,33 @@ The example test calls the Authority Wizard page and relies on the following ser
     AUTH_LOGIN_STUB
     USER_DETAILS
     PAYMENTS_FRONTEND
+    IDENTITY_VERIFICATION
 
-### Browser Testing
-In order to run the tests via BrowserStack you will need to apply the BrowserStack scaffold to your new project using the following command:
+## Available Scaffolds
+### BrowserStack Scaffold
+If you would like to include BrowserStack support in your project you will need to apply the BrowserStack scaffold.  To do this, run the following command from within the project you generated from the template (note that this **DOES** use the giter8 sbt plugin):
 
 ```sbtshell
 sbt 'g8Scaffold browserstack'
 ```
 
-This will overlay the contents of the `.g8/browserstack` project folder into the project.  Once done, you will need to create a properties file (**./src/test/resources/browserConfig.properties**) containing your BrowserStack username and automate key (this is _not_ your password):
+This will overlay the contents of the `.g8/browserstack` project folder into your UI test project.  
+
+You will then need to make the following changes to your project:
+
+#### 1. Include "browserstack" in Driver.scala
+You will need to the following change to the `src/test/scala/uk/gov/hmrc/test/ui/driver/Driver.scala` object to make use of `src/test/scala/uk/gov/hmrc/test/ui/driver/browsers/BrowserStack.scala`:
+
+```scala
+   ...
+   case Some("remote-firefox") => remoteWebdriverInstance(firefoxOptions)
+   case Some("browserstack") => BrowserStack.initialise()   //include this line
+   case Some(name) => sys.error(s"'browser' property '$name' not recognised.")
+   ...
+```
+
+#### 2. Create a properties file for BrowserStack authentication
+Create the following properties file (**./src/test/resources/browserConfig.properties**) containing your BrowserStack username and automate key (this is _not_ your password):
 
 ```properties
 username=
@@ -98,45 +91,73 @@ Alternatively if you access [www.browserstack.com/automate](http://www.browserst
 
 >**Note:** The settings page displays the automate key as the access key.
 
-Then you need to change the project name and description within the BrowserStack.scala file.
+#### 3. Update the BrowserStack.scala file with your project details
+Then you need to change the projectName and buildName properties in `src/test/scala/uk/gov/hmrc/test/ui/driver/browsers/`.
 
-You can use the search everywhere function within IntelliJ (Ctrl + Shift + F) to find these entries.
- - desCaps.setCapability("project", "Template")
- - desCaps.setCapability("build", "Template Build_1.0")
+#### 4. Include any other Browsers you'd like to test with in the src/test/resources/browserstackdata directory
+If you'd like to add a browser for testing via BrowserStack, you'll have to create a JSON file within the `src/test/resources/browserstackdata` folder either of the two following structures:
 
-For our first run this was set to:
- - desCaps.setCapability("project", "projectName")
- - desCaps.setCapability("build", "Local Complete TestBuild_0.1")
+**Desktop Browser**
+```json
+{
+  "os": "<operating-system>",
+  "os_version": "<>",
+  "browser": "samsung",
+  "browser_version": "",
+  "device": "Samsung Galaxy S8"
+}
+```
 
-To add a browser to be tested via BrowserStack, a JSON object needs to be created within the src/test/resources/browserstackdata folder with the following information:
+**Mobile Browser**      
+```json 
+{
+  "browser":"Chrome",
+  "browser_version":"64.0",
+  "os":"Windows",
+  "os_version":"7"
+}
+```
+**Note:** ideally these should be representing the latest versions of the chosen browser and/or devices.
 
-    Desktop browser:
-        - browser
-        - browser_version
-        - os
-        - os_version
+The json filename must take the form (with **device-name** being optional) `BS_<OS>_<device-name>_<browser>_<browser-version>`.  For example, the following are all appropriately named files:
 
-    Mobile Browser:
-        - browserName
-        - platform
-        - device
-
-> **Note:** ideally these should be representing the latest versions of the chosen browser and/or devices.
-
-The title of the JSON file should be as follows:
-BS_OS/Device_Version_Browser_BrowserVersion
-
-For Example:
-
-    BS_Win8_Chrome_v64
+    BS_Win8_Chrome_v64.json
+    BS_Android_GalaxyS8_v7.json
+    BS_Win10_Edge_v16.json
 
 Once the JSON objects have been created, these need to be added to the run_browserstack.sh script.
 
-To execute, first run the **run_browserstackbinary.sh** script from the root directory of the project and leave it running in a separate terminal window.
+#### 5. Running a BrowserStack test from your local development environment
+To run a test using BrowserStack, first execute the **run_browserstackbinary.sh** script (which will now be present in your project root) to download/start the browserstack binary. 
 
-Now run the **run_browserstack.sh** script.
+To run the tests, execute the **run_browserstack.sh** script.
 
->**Note:** if you only wish to run either the browsers or devices you need to remove the relevant entry from within run_browserstack.sh
+>**Note 1:** if you only wish to run either the browsers or devices you need to remove the relevant entry from within run_browserstack.sh
 
->**Note:** the changes made to browserConfig.properties should not be pushed to GitHub and therefore you should make sure that this file is included on the `.gitignore` file for your project.
+>**Note 2:** the changes made to browserConfig.properties should not be pushed to GitHub and therefore you should make sure that this file is included on the `.gitignore` file for your project.
 
+## Development
+If you'd like to contribute to the ui-test-template you'll need to test your changes before raising a PR.  
+
+### Manually generating a UI Test project from you local changes
+To create a test project from your local changes, execute the following command from the parent directory of your local copy of the template:
+
+    g8 file://ui-test-template.g8/ --name=my-test-project --cucumber=true
+
+This will create a new UI test project in a folder named `my-test-project/`.  
+ 
+### Running the ui-test-template.g8 tests
+There are test scripts (written in bash) in the `tests/` folder which run UI tests against serveral combinations of browser->test-runner->test-environment.  To successfully run the tests you will need to satisfy the following pre-requisites: 
+
+- [Install Giterate CLI](#install-giterate)
+- Install [Docker]()
+- Build the latest HMRC Digital Chrome and Firefox images (see Confluence)
+- Install chromedriver and geckodriver (reference the project [README.md](./src/main/g8/README.md) )
+- Install and configure [Service Manager](https://github.com/hmrc/service-manager) (see Confluence)
+- Install [Mongo](https://docs.mongodb.com/manual/installation/)
+
+Copy `tests/ui-test-template-tests.sh` to the parent directory of your local copy of the ui-test-template.g8 project.  Execute the script without params:
+
+    ./ui-test-template-tests.sh
+
+**Note:** Currently these tests do not assert that the test run was successful.  
