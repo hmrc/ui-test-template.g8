@@ -19,7 +19,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.openqa.selenium.WebDriver
 import uk.gov.hmrc.test.ui.driver.browsers._
 
-object Driver extends LazyLogging with WindowControls {
+object Driver extends LazyLogging {
 
   val instance: WebDriver = {
     sys.props.get("browser").map(_.toLowerCase) match {
