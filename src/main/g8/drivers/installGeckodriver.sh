@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
+#This script supports linux and mac installations.
+DEFAULT_VERSION="0.21.0"
 
-#Depending on the OS of your device, change the value of OS appropriately
-OS="linux64"
-#OS="macos"
+OS=\${1:-linux64}
+GECKO_VERSION=\${2:-\$DEFAULT_VERSION}
 
-#These match the configuration on Jenkins - you should only have to adjust these values when the platform makes changes
-GECKO_VERSION="0.21.0"
+die () {
+    echo >&2 "\$@"
+    exit 1
+}
+
+[ "\$OS" == "linux64" ] || [ "\$OS" == "macos" ] || die "First argument must be one of [linux64,macos].  \"\$OS\" is not supported"
+
 GECKO_PARENT_DIR="/usr/local/bin/"
-
 GECKO_DOWNLOAD_URL="https://github.com/mozilla/geckodriver/releases/download/v\${GECKO_VERSION}/geckodriver-v\${GECKO_VERSION}-\${OS}.tar.gz"
 GECKO_TEMP="/tmp/geckodriver-v\${GECKO_VERSION}-\${OS}.tar.gz"
 

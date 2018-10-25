@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
+#This script supports linux and mac installations.
+OS=\${1:-linux64}
 
-#Depending on the OS of your device, change the value of OS appropriately
-OS="linux64"
-#OS="mac64"
+die () {
+    echo >&2 "\$@"
+    exit 1
+}
 
-#These match the configuration on Jenkins - you should only have to adjust these values when the platform makes changes
+[ "\$OS" == "linux64" ] || [ "\$OS" == "mac64" ] || die "First argument must be one of [linux64,mac64].  \"\$OS\" is not supported"
+
 CHROME_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
 CHROME_PARENT_DIR="/usr/local/bin/"
 
