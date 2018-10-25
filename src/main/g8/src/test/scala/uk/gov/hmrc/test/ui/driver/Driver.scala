@@ -15,26 +15,79 @@
  */
 package uk.gov.hmrc.test.ui.driver
 
+import java.net.URL
+
 import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.WebDriver
-import uk.gov.hmrc.test.ui.driver.browsers._
+import org.openqa.selenium.{MutableCapabilities, Proxy, WebDriver}
+import org.openqa.selenium.chrome.{ChromeDriver, ChromeOptions}
+import org.openqa.selenium.firefox.{FirefoxDriver, FirefoxOptions, FirefoxProfile}
+import org.openqa.selenium.remote.{CapabilityType, RemoteWebDriver}
+import uk.gov.hmrc.test.ui.conf.TestConfiguration._
 
 object Driver extends LazyLogging {
 
+  private val defaultSeleniumHubUrl: String = s"http://localhost:4444/wd/hub"
+
   val instance: WebDriver = {
     sys.props.get("browser").map(_.toLowerCase) match {
-      case Some("chrome") => ChromeBrowser.initialise(javascriptEnabled, sys.props.contains("headless"))
-      case Some("chrome-headless") => ChromeBrowser.initialise(javascriptEnabled, headlessMode = true)
-      case Some("firefox") => FirefoxBrowser.initialise(javascriptEnabled)
+      case Some("chrome") => chromeInstance(chromeOptions)
+      case Some("chrome-headless") => chromeInstance(chromeOptions.addArguments("headless"))
+      case Some("firefox") => firefoxInstance(firefoxOptions)
+      case Some("remote-chrome") => remoteWebdriverInstance(chromeOptions)
+      case Some("remote-firefox") => remoteWebdriverInstance(firefoxOptions)
       case Some(name) => sys.error(s"'browser' property '\$name' not recognised.")
       case None => {
         logger.warn("'browser' property is not set, defaulting to 'chrome'")
-        ChromeBrowser.initialise(javascriptEnabled, headlessMode = false)
+        chromeInstance(chromeOptions)
       }
     }
   }
 
-  lazy val javascriptEnabled: Boolean = {
+  private def chromeInstance(options: ChromeOptions): WebDriver = {
+    new ChromeDriver(options)
+  }
+
+  private def firefoxInstance(options: FirefoxOptions): WebDriver = {
+    System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE, "true")
+    System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null")
+    new FirefoxDriver(options)
+  }
+
+  private def remoteWebdriverInstance(hubUrl: String, options: MutableCapabilities): WebDriver = {
+    new RemoteWebDriver(new URL(hubUrl), options)
+  }
+
+  private def remoteWebdriverInstance(options: MutableCapabilities): WebDriver = {
+    remoteWebdriverInstance(defaultSeleniumHubUrl, options)
+  }
+
+  private def chromeOptions: ChromeOptions = {
+    val options = new ChromeOptions()
+    if (proxyRequired) options.setCapability(CapabilityType.PROXY, proxyConfiguration)
+    options.addArguments("test-type")
+    options.addArguments("--no-sandbox")
+    options.addArguments("start-maximized")
+    options.addArguments("disable-infobars")
+    options.setCapability("takesScreenshot", true)
+    options.setCapability("javascript.enabled", javascriptEnabled)
+
+    options
+  }
+
+  private def firefoxOptions: FirefoxOptions = {
+    val profile = new FirefoxProfile()
+    profile.setAcceptUntrustedCertificates(true)
+    profile.setPreference("javascript.enabled", javascriptEnabled)
+
+    val options = new FirefoxOptions()
+    if(proxyRequired) options.setCapability(CapabilityType.PROXY, proxyConfiguration)
+    options.setProfile(profile)
+    options.setAcceptInsecureCerts(true)
+
+    options
+  }
+
+  private lazy val javascriptEnabled: Boolean = {
     sys.props.get("javascript").map(_.toLowerCase) match {
       case Some("true") => true
       case Some("false") => false
@@ -44,6 +97,10 @@ object Driver extends LazyLogging {
         true
       }
     }
+  }
+
+  private def proxyConfiguration: Proxy = {
+    new Proxy().setHttpProxy(proxyConnectionString)
   }
 }
 
