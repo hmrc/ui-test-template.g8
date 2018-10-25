@@ -23,11 +23,11 @@ This repository is supported by the Test Community for any information on how to
 If you'd like to contribute, please raise a PR and notify us in #community-testing - one of the core maintainers will take a look and merge the PR.
 
 ### Testing your contributions
-To ensure your changes haven't broken the template, you can run the following commands locally before submitting your PR:
+To ensure your changes haven't broken the template, you can run the following commands locally before submitting your PR.  This will run the example specs/features with local chrome against local services :
 
     sudo mongod
     sm --start ACCEPTANCE_TEST_TEMPLATE -f
-    ./run_local.sh
+    ./run_tests.sh
 
 ### How to use this template
 
