@@ -39,9 +39,8 @@ To generate a test suite, execute the following command
 
 This will prompt you for:
 - **name** -> The name of the ui test repository.  I.e. my-digital-service-ui-tests
-- **cucumber** -> [OPTIONAL] A Boolean property which defaults to `false` (Scalatest).  Selecting `true` will provide you with all the required dependencies to run Cucumber, as well as example StepDef and TestRunner objects.
+- **cucumber** -> [OPTIONAL] A Boolean property which defaults to `false`.  By default, the project will be created with an example Scalatest Spec.  Selecting `true` will provide you with all the required dependencies to run Cucumber, an example test Feature, example StepDef and TestRunner objects. 
 
-Upon Answering these questions will result in a blank test suite with all the basic requirements needed for ui tests in your current directory.
 
 ###  Example Feature
 The example test is quite limited in what it does.  It calls the Authority Wizard page to authenticate with and redirect to the PAYMENTS_FRONTEND, then completes a simple VAT Registraion journey.  This depends on the services in the `UI_TEST_TEMPLATE` being available:
@@ -137,9 +136,9 @@ To run the tests, execute the **run_browserstack.sh** script.
 >**Note 2:** the changes made to browserConfig.properties should not be pushed to GitHub and therefore you should make sure that this file is included on the `.gitignore` file for your project.
 
 ## Development
-If you'd like to contribute to the ui-test-template you'll need to test your changes before raising a PR.  
+If you'd like to contribute to the ui-test-template you'll need to test your changes before raising a PR (see below).  
 
-### Manually generating a UI Test project from you local changes
+### Generating a UI Test project from you local changes
 To create a test project from your local changes, execute the following command from the parent directory of your local copy of the template:
 
     g8 file://ui-test-template.g8/ --name=my-test-project --cucumber=true
@@ -154,7 +153,7 @@ There are test scripts (written in bash) in the `tests/` folder which run UI tes
 - Build the latest HMRC Digital Chrome and Firefox images (see Confluence)
 - Install chromedriver and geckodriver (reference the project [README.md](./src/main/g8/README.md) )
 - Install and configure [Service Manager](https://github.com/hmrc/service-manager) (see Confluence)
-- Install [Mongo](https://docs.mongodb.com/manual/installation/)
+- Install Mongo (see Confluence)
 
 Copy `tests/ui-test-template-tests.sh` to the parent directory of your local copy of the ui-test-template.g8 project.  Execute the script without params:
 

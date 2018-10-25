@@ -10,7 +10,7 @@ Prior to executing the tests ensure you have the appropriate [drivers installed]
 Run the following command to start services locally:
 
     sudo mongod
-    sm --start UI_TEST_TEMPLATE
+    sm --start UI_TEST_TEMPLATE -f
 
 Then execute the `run_tests.sh` script:
     
