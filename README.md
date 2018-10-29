@@ -159,4 +159,4 @@ Copy `tests/ui-test-template-tests.sh` to the parent directory of your local cop
 
     ./ui-test-template-tests.sh
 
-**Note:** Currently these tests do not assert that the test run was successful.  
+**Note:** At present these tests create different types of projects off the template, and run the UI test off those projects.  No assertions are made to ensure that the test ran and passed, you will have to consult the logs to ensure that the tests ran successfully.
