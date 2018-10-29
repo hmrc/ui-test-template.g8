@@ -24,7 +24,7 @@ import org.openqa.selenium.firefox.{FirefoxDriver, FirefoxOptions, FirefoxProfil
 import org.openqa.selenium.remote.{CapabilityType, RemoteWebDriver}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration._
 
-object Driver extends LazyLogging with WindowControls {
+object Driver extends LazyLogging {
 
   private val defaultSeleniumHubUrl: String = s"http://localhost:4444/wd/hub"
 
