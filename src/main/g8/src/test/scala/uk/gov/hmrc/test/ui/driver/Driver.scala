@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.driver
 import java.net.URL
 
 import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.{MutableCapabilities, Proxy, WebDriver}
+import org.openqa.selenium.{Capabilities, MutableCapabilities, Proxy, WebDriver}
 import org.openqa.selenium.chrome.{ChromeDriver, ChromeOptions}
 import org.openqa.selenium.firefox.{FirefoxDriver, FirefoxOptions, FirefoxProfile}
 import org.openqa.selenium.remote.{CapabilityType, RemoteWebDriver}
@@ -29,7 +29,7 @@ object Driver extends LazyLogging {
   private val defaultSeleniumHubUrl: String = s"http://localhost:4444/wd/hub"
 
   val instance: WebDriver = {
-    sys.props.get("browser").map(_.toLowerCase) match {
+   val driver: WebDriver = sys.props.get("browser").map(_.toLowerCase) match {
       case Some("chrome") => chromeInstance(chromeOptions)
       case Some("chrome-headless") => chromeInstance(chromeOptions.addArguments("headless"))
       case Some("firefox") => firefoxInstance(firefoxOptions)
@@ -41,6 +41,8 @@ object Driver extends LazyLogging {
         chromeInstance(chromeOptions)
       }
     }
+    logDriverCapabilities(driver)
+    driver
   }
 
   private def chromeInstance(options: ChromeOptions): WebDriver = {
@@ -101,6 +103,19 @@ object Driver extends LazyLogging {
 
   private def proxyConfiguration: Proxy = {
     new Proxy().setHttpProxy(proxyConnectionString)
+  }
+
+  private def logDriverCapabilities(driver: WebDriver) = {
+    val capabilities: Capabilities = driver.asInstanceOf[RemoteWebDriver].getCapabilities
+    val browserType = capabilities.getBrowserName
+    logger.info(s"Browser Name: \$browserType")
+    logger.info(s"Browser Version: \${capabilities.getVersion}")
+
+    browserType match {
+      case "chrome" => logger.info(s"Driver Version: \${capabilities.getCapability("chrome")}")
+      case "firefox" =>  logger.info(s"Driver Version: \${capabilities.getCapability("moz:geckodriverVersion")}")
+      case _ =>  logger.info(s"Browser Capabilities: \$capabilities")
+    }
   }
 }
 
