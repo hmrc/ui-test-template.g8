@@ -26,6 +26,7 @@ This repository is supported by HMRC Digital's Test Community.  If you have a qu
 If you'd like to contribute we welcome you to raise a PR or issue against the project and notify one of the core maintainers in #community-testing.
 
 ## Generating a UI Test project
+You **DO NOT** need to clone this project to generate a UI Test project from the template.  You simply need to have giter8 installed, and run the `g8` command below.
 
 ### [Install giter8 CLI](#install-giterate) 
 You will need to have giter8 installed in order to generate a test suite from ui-test-template. Due to some limitations with the SBT giter8 plugin, unfortunately this template will not generate successfully. 
@@ -33,7 +34,7 @@ You will need to have giter8 installed in order to generate a test suite from ui
 Instructions to install giter8 can be found [here](http://www.foundweekends.org/giter8/setup.html).
 
 ### Generating a UI Test project from master
-To generate a test suite, execute the following command 
+To generate a test suite, execute the following command in the parent directory of where you'd like your UI Test project created:
     
     g8 hmrc/ui-test-template.g8
 
