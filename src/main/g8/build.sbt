@@ -13,7 +13,6 @@ libraryDependencies ++= Seq(
   "org.seleniumhq.selenium"    %  "selenium-support"        % "3.9.1",
   "org.seleniumhq.selenium"    %  "selenium-firefox-driver" % "3.9.1",
   "org.scalatest"              %% "scalatest"               % "3.0.5" % "test",
-  "net.lightbody.bmp"          %  "browsermob-core"         % "2.1.5" exclude("com.google.guava", "guava"),
   $if(cucumber.truthy)$
   "info.cukes"                 %% "cucumber-scala"          % "1.2.5" % "test",
   "info.cukes"                 %  "cucumber-junit"          % "1.2.5" % "test",
