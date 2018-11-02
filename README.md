@@ -42,8 +42,8 @@ This will prompt you for:
 - **cucumber** -> [OPTIONAL] A Boolean property which defaults to `false`.  By default, the project will be created with an example Scalatest Spec.  Selecting `true` will provide you with all the required dependencies to run Cucumber, an example test Feature, example StepDef and TestRunner objects. 
 
 
-###  Example Feature
-The example test is quite limited in what it does.  It calls the Authority Wizard page to authenticate with and redirect to the PAYMENTS_FRONTEND, then completes a simple VAT Registraion journey.  This depends on the services in the `UI_TEST_TEMPLATE` being available:
+### A Note on the Example Spec/Feature
+The example test created by this template is quite limited in what it does.  It calls the Authority Wizard page to authenticate with and redirect to the PAYMENTS_FRONTEND, then completes a simple VAT Registraion journey.  This depends on the services in the `UI_TEST_TEMPLATE` being available:
 
     ASSETS_FRONTEND
     AUTH
