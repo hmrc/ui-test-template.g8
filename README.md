@@ -42,6 +42,7 @@ This will prompt you for:
 - **name** -> The name of the ui test repository.  I.e. my-digital-service-ui-tests
 - **cucumber** -> [OPTIONAL] A Boolean property which defaults to `false`.  By default, the project will be created with an example Scalatest Spec.  Selecting `true` will provide you with all the required dependencies to run Cucumber, an example test Feature, example StepDef and TestRunner objects. 
 
+To execute the example test, follow the steps in the project README.md
 
 ### A Note on the Example Spec/Feature
 The example test created by this template is quite limited in what it does.  It calls the Authority Wizard page to authenticate with and redirect to the PAYMENTS_FRONTEND, then completes a simple VAT Registraion journey.  This depends on the services in the `UI_TEST_TEMPLATE` being available:
@@ -52,7 +53,7 @@ The example test created by this template is quite limited in what it does.  It 
     AUTH_LOGIN_STUB
     USER_DETAILS
     PAYMENTS_FRONTEND
-    IDENTITY_VERIFICATION
+    IDENTITY_VERIFICATION 
 
 ## Available Scaffolds
 ### BrowserStack Scaffold
