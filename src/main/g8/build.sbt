@@ -8,12 +8,18 @@ credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
+$if(!cucumber.truthy)$
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
+$endif$
+
 libraryDependencies ++= Seq(
   "org.seleniumhq.selenium"    %  "selenium-chrome-driver"  % "3.9.1",
   "org.seleniumhq.selenium"    %  "selenium-support"        % "3.9.1",
   "org.seleniumhq.selenium"    %  "selenium-firefox-driver" % "3.9.1",
   "org.scalatest"              %% "scalatest"               % "3.0.5" % "test",
-  $if(cucumber.truthy)$
+  $if(!cucumber.truthy)$
+  "org.pegdown"                %  "pegdown"                 % "1.2.1" % "test",
+  $else$
   "info.cukes"                 %% "cucumber-scala"          % "1.2.5" % "test",
   "info.cukes"                 %  "cucumber-junit"          % "1.2.5" % "test",
   "info.cukes"                 %  "cucumber-picocontainer"  % "1.2.5" % "test",
