@@ -18,8 +18,13 @@ Then execute the `run_tests.sh` script:
 
 The `run_tests.sh` script defaults to the `local` environment with the locally installed `chrome` driver binary.  For a complete list of supported param values, see:
  - `src/test/resources/application.conf` for **environment** 
- - `src/test/scala/uk/gov/hmrc/test/ui/driver/Driver.scala` for **browser-driver**
-
+ - `src/test/scala/uk/gov/hmrc/test/ui/driver/BrowserDriver.scala` for **browser-driver**
+ 
+**NOTE:** The test suite uses HMRC's webdriver-factory library to implement Browser Driver functionality.
+Refer to the webdriver-factory's [documentation](https://github.com/hmrc/webdriver-factory/blob/master/README.md) for a 
+list of supported browsers and other features like instantiating a browser with custom options, proxying traffic via ZAP
+and executing against a Test Environment.
+ 
 
 ## [Installing local driver binaries](#install-driver-binaries)
 

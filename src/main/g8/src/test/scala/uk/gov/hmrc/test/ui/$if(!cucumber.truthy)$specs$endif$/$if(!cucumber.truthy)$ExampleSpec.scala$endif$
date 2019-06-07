@@ -21,8 +21,6 @@ class ExampleSpec extends BaseSpec {
         pageTitle shouldBe PayOnlinePage.title
       }
 
-//      linkText("Sign out").webElement.isDisplayed
-
       When("User chooses to pay VAT tax")
       click on radioButton("vat")
       click on "next"
