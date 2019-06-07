@@ -17,6 +17,8 @@ package uk.gov.hmrc.test.ui.driver
 
 import com.typesafe.scalalogging.LazyLogging
 import org.openqa.selenium.WebDriver
+import uk.gov.hmrc.webdriver.SingletonDriver
+import uk.gov.hmrc.test.ui.conf.TestConfiguration._
 
 trait BrowserDriver extends LazyLogging {
   logger.info(s"Instantiating Browser: \${sys.props.getOrElse("browser", "'browser' System property not set. This is required")}")
