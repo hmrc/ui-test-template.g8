@@ -21,17 +21,17 @@ class ExampleSpec extends BaseSpec {
         pageTitle shouldBe PayOnlinePage.title
       }
 
-      linkText("Sign out").webElement.isDisplayed
+//      linkText("Sign out").webElement.isDisplayed
 
       When("User chooses to pay VAT tax")
       click on radioButton("vat")
-      submit()
+      click on "next"
       eventually {
-        pageTitle shouldBe "Your payment details - Pay a tax bill - Gov.UK"
+        pageTitle shouldBe "Choose a way to pay - Pay HMRC - GOV.UK"
       }
 
-      Then("Payment details page is displayed")
-      tagName("h1").element.text shouldBe "Your payment details"
+      Then("Choose a way to pay page is displayed")
+      tagName("h1").element.text shouldBe "Choose a way to pay"
     }
   }
 }

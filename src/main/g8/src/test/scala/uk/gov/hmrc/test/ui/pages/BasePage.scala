@@ -9,8 +9,7 @@ trait BasePage extends Matchers {
 
 $else$
 import org.scalatest.Matchers
-import org.scalatest.selenium.Page
-import org.scalatest.selenium.WebBrowser
+import org.scalatestplus.selenium.{Page, WebBrowser}
 
 trait BasePage extends Matchers with Page with WebBrowser {
 
