@@ -6,13 +6,15 @@ scalaVersion := "2.11.11"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
+resolvers += "hmrc-releases" at "https://artefacts.tax.service.gov.uk/artifactory/hmrc-releases/"
+
 $if(!cucumber.truthy)$
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
   testOptions in Test += Tests.Argument("-o")
 $endif$
 
 libraryDependencies ++= Seq(
-  "uk.gov.hmrc"                %% "webdriver-factory"       % "0.+"   % "test",
+  "uk.gov.hmrc"                %% "webdriver-factory"       % "0.6.0"   % "test",
   "org.scalatest"              %% "scalatest"               % "3.0.7" % "test",
   $if(!cucumber.truthy)$
   "org.pegdown"                %  "pegdown"                 % "1.2.1" % "test",
