@@ -52,7 +52,8 @@ The example test created by this template is quite limited in what it does.  It 
     AUTH_LOGIN_API
     AUTH_LOGIN_STUB
     USER_DETAILS
-    PAYMENTS_FRONTEND
+    PAY_FRONTEND
+    PAY_API
     IDENTITY_VERIFICATION 
 
 ## Available Scaffolds

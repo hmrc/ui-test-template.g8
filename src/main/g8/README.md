@@ -18,8 +18,18 @@ Then execute the `run_tests.sh` script:
 
 The `run_tests.sh` script defaults to the `local` environment with the locally installed `chrome` driver binary.  For a complete list of supported param values, see:
  - `src/test/resources/application.conf` for **environment** 
- - `src/test/scala/uk/gov/hmrc/test/ui/driver/Driver.scala` for **browser-driver**
+ - [webdriver-factory](https://github.com/hmrc/webdriver-factory#2-instantiating-a-browser-with-default-options) for **browser-driver**
+ 
+#### Running the tests against an environment
 
+To run the tests against an environment set the corresponding `host` environment property as specified under
+ `<env>.host.services` in the [application.conf](/src/test/resources/application.conf). For environments where 
+ `proxyRequired` is set to `true` in the config, environment proxy is configured automatically using the 
+ [webdriver-factory](https://github.com/hmrc/webdriver-factory#executing-against-a-test-environment) library. 
+ 
+For example, to execute the `run_tests.sh` script against QA  environment using chrome remote-webdriver
+     
+    ./run_tests.sh qa remote-chrome
 
 ## [Installing local driver binaries](#install-driver-binaries)
 

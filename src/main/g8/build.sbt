@@ -4,19 +4,18 @@ version := "0.1.0"
 
 scalaVersion := "2.11.11"
 
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
-
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
+resolvers += "hmrc-releases" at "https://artefacts.tax.service.gov.uk/artifactory/hmrc-releases/"
+
 $if(!cucumber.truthy)$
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
+  testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
+  testOptions in Test += Tests.Argument("-o")
 $endif$
 
 libraryDependencies ++= Seq(
-  "org.seleniumhq.selenium"    %  "selenium-chrome-driver"  % "3.9.1",
-  "org.seleniumhq.selenium"    %  "selenium-support"        % "3.9.1",
-  "org.seleniumhq.selenium"    %  "selenium-firefox-driver" % "3.9.1",
-  "org.scalatest"              %% "scalatest"               % "3.0.5" % "test",
+  "uk.gov.hmrc"                %% "webdriver-factory"       % "0.6.0"   % "test",
+  "org.scalatest"              %% "scalatest"               % "3.0.7" % "test",
   $if(!cucumber.truthy)$
   "org.pegdown"                %  "pegdown"                 % "1.2.1" % "test",
   $else$
@@ -26,8 +25,6 @@ libraryDependencies ++= Seq(
   "junit"                      %  "junit"                   % "4.12"  % "test",
   "com.novocode"               %  "junit-interface"         % "0.11"  % "test",
   $endif$
-  "ch.qos.logback"             %  "logback-classic"         % "1.2.3",
-  "com.typesafe.scala-logging" %% "scala-logging"           % "3.8.0",
   "com.typesafe"               %  "config"                  % "1.3.2"
   )
 
