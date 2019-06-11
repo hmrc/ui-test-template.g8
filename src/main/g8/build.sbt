@@ -4,12 +4,11 @@ version := "0.1.0"
 
 scalaVersion := "2.11.11"
 
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
-
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 $if(!cucumber.truthy)$
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
+  testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
+  testOptions in Test += Tests.Argument("-o")
 $endif$
 
 libraryDependencies ++= Seq(
