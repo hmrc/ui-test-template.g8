@@ -157,6 +157,7 @@ There are test scripts (written in bash) in the `tests/` folder which run UI tes
 - Install chromedriver and geckodriver (reference the project [README.md](./src/main/g8/README.md) )
 - Install and configure [Service Manager](https://github.com/hmrc/service-manager) (see Confluence)
 - Install Mongo (see Confluence)
+- Install ZAP (see [zaproxy](https://github.com/zaproxy/zaproxy/wiki/Downloads))
 
 Copy `tests/ui-test-template-tests.sh` to the parent directory of your local copy of the ui-test-template.g8 project.  Execute the script without params:
 

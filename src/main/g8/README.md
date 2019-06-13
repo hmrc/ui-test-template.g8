@@ -27,9 +27,41 @@ To run the tests against an environment set the corresponding `host` environment
  `proxyRequired` is set to `true` in the config, environment proxy is configured automatically using the 
  [webdriver-factory](https://github.com/hmrc/webdriver-factory#executing-against-a-test-environment) library. 
  
-For example, to execute the `run_tests.sh` script against QA  environment using chrome remote-webdriver
+For example, to execute the `run_tests.sh` script against QA  environment using Chrome remote-webdriver
      
     ./run_tests.sh qa remote-chrome
+
+## Running ZAP tests
+
+ZAP tests are implemented using the HMRC [zap-automation](https://github.com/hmrc/zap-automation) library.
+
+#### Tagging tests for ZAP
+
+It is not required to proxy every journey test via ZAP. The intention of proxying a test through ZAP is to expose all the
+ relevant pages of an application to ZAP. So tagging a subset of the journey tests or creating a 
+ single ZAP focused journey test is sufficient.
+ 
+#### Configuring the browser to proxy via ZAP 
+
+Setting the system property `zap.proxy=true` configures the browser specified in `browser` property to proxy via ZAP. 
+This is achieved using [webdriver-factory](https://github.com/hmrc/webdriver-factory#proxying-trafic-via-zap).  
+
+#### zap-automation config
+Running ZAP tests require passing a zap-automation config object to the zap-automation library. `zap-automation` config is 
+defined in the [application.conf](/src/test/resources/application.conf). The config is passed to the `zap-automation`
+library via [ZapSpec](/src/test/scala/uk/gov/hmrc/test/ui/ZapSpec.scala) from which the ZAP tests are triggered.
+
+#### Executing a ZAP test
+
+The shell script `run_zap_tests.sh` is available to execute ZAP tests. The script first proxies a set of journey tests, 
+tagged as `ZapTests`, via ZAP. Upon completion, the script then triggers a ZAP scan for the provided `zap-automation` config. 
+
+For example, to execute ZAP tests locally using a Chrome browser
+ 
+    ./run_zap_test.sh local chrome
+    
+For more information about ZAP tests, please refer to the `zap-automation` [documentation](https://github.com/hmrc/zap-automation/blob/master/README.md).
+
 
 ## [Installing local driver binaries](#install-driver-binaries)
 

@@ -33,6 +33,10 @@ class ExampleStepDef extends BaseStepDef {
     }
   }
 
+  Given("""^a user navigates to payments page\$""") { () =>
+    driver.navigate().to(PayOnlinePage.url)
+  }
+
   When("""^the user chooses to pay VAT tax\$""") { () =>
     driver.findElement(By.id("vat")).click()
     driver.findElement(By.id("next")).click()
