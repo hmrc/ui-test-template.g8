@@ -10,7 +10,7 @@ class ExampleSpec extends BaseSpec {
 
   feature("User accessing payments page") {
 
-    scenario("A logged in user is able to access payment details page") {
+    scenario("A logged in user is able to access payment details page", ZapTests) { //Remove ZapTests tag if not required
 
       Given("A logged in user accesses payments page")
 
@@ -32,28 +32,5 @@ class ExampleSpec extends BaseSpec {
       Then("Choose a way to pay page is displayed")
       tagName("h1").element.text shouldBe "Choose a way to pay"
     }
-
-    //Test tagged for ZAP
-    scenario("A logged out user is able to access payment details page", ZapTests) {
-
-      Given("A logged out user accesses payments page")
-
-      go to PayOnlinePage.url
-
-      eventually {
-        pageTitle shouldBe PayOnlinePage.title
-      }
-
-      When("User chooses to pay VAT tax")
-      click on radioButton("vat")
-      click on "next"
-      eventually {
-        pageTitle shouldBe "Choose a way to pay - Pay HMRC - GOV.UK"
-      }
-
-      Then("Choose a way to pay page is displayed")
-      tagName("h1").element.text shouldBe "Choose a way to pay"
-    }
-
   }
 }
