@@ -2,13 +2,8 @@
 
 Feature: Example Feature file using Cucumber
 
+  @ZAP
   Scenario: A logged in user is able to access payment details page
     Given a user logs in to access payments page
-    When the user chooses to pay VAT tax
-    Then payment details page is displayed
-
-  @ZAP
-  Scenario: A logged out user is able to access payment details page
-    Given a user navigates to payments page
     When the user chooses to pay VAT tax
     Then payment details page is displayed

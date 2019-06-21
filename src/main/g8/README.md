@@ -33,7 +33,7 @@ For example, to execute the `run_tests.sh` script against QA  environment using 
 
 ## Running ZAP tests
 
-ZAP tests are implemented using the HMRC [zap-automation](https://github.com/hmrc/zap-automation) library.
+ZAP tests can be automated using the HMRC [zap-automation](https://github.com/hmrc/zap-automation) library. It is not mandatory to do so and should not be considered a substitute for manual exploratory testing using OWASP ZAP.
 
 #### Tagging tests for ZAP
 

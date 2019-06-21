@@ -14,7 +14,7 @@ fi
 # single ZAP focused journey test is sufficient.
 
 $if(cucumber.truthy)$
-sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER -Dzap.proxy=true 'test-only uk.gov.hmrc.test.ui.cucumber.runner.ZapRunner'
+sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER -Dzap.proxy=true "test-only uk.gov.hmrc.test.ui.cucumber.runner.ZapRunner"
 $else$
 # -n ZapTests Runs only the tests tagged as ZapTests.
 sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER -Dzap.proxy=true "testOnly uk.gov.hmrc.test.ui.specs.* -- -n ZapTests"
