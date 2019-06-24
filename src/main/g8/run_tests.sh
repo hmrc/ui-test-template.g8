@@ -10,7 +10,7 @@ elif [ "\$BROWSER" = "firefox" ]; then
 fi
 
 $if(cucumber.truthy)$
-sbt -Dlogback.configurationFile=logback.xml -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER 'test-only uk.gov.hmrc.test.ui.cucumber.runner.Runner'
+sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER "test-only uk.gov.hmrc.test.ui.cucumber.runner.Runner"
 $else$
-sbt -Dlogback.configurationFile=logback.xml -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER test
+sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER "testOnly uk.gov.hmrc.test.ui.specs.*"
 $endif$

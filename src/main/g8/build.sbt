@@ -1,3 +1,5 @@
+import sbt.Resolver
+
 name := "$name$"
 
 version := "0.1.0"
@@ -7,6 +9,7 @@ scalaVersion := "2.11.11"
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 resolvers += "hmrc-releases" at "https://artefacts.tax.service.gov.uk/artifactory/hmrc-releases/"
+resolvers += Resolver.bintrayRepo("hmrc", "releases")
 
 $if(!cucumber.truthy)$
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
@@ -25,6 +28,7 @@ libraryDependencies ++= Seq(
   "junit"                      %  "junit"                   % "4.12"  % "test",
   "com.novocode"               %  "junit-interface"         % "0.11"  % "test",
   $endif$
+  "uk.gov.hmrc"                %% "zap-automation"          % "1.14.0"  % "test",
   "com.typesafe"               %  "config"                  % "1.3.2"
   )
 
