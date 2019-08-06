@@ -1,3 +1,4 @@
+$if(cucumber.truthy)$
 @Example
 
 Feature: Example Feature file using Cucumber
@@ -7,3 +8,8 @@ Feature: Example Feature file using Cucumber
     Given a user logs in to access payments page
     When the user chooses to pay VAT tax
     Then payment details page is displayed
+$endif$
+
+$if(!cucumber.truthy)$
+# This file is not required for Scalatest. Please delete. Created as a result of incorrect g8 behaviour.
+$endif$
