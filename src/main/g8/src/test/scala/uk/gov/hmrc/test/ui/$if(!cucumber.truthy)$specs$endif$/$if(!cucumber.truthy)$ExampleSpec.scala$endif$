@@ -26,7 +26,7 @@ class ExampleSpec extends BaseSpec {
       click on radioButton("vat")
       click on "next"
       eventually {
-        pageTitle shouldBe "Choose a way to pay - Pay HMRC - GOV.UK"
+        pageTitle shouldBe "Pay your VAT - Pay HMRC - GOV.UK"
       }
 
       Then("Choose a way to pay page is displayed")
