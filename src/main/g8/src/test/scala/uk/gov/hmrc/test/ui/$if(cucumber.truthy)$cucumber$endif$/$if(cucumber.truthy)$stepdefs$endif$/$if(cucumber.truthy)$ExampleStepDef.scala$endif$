@@ -44,7 +44,7 @@ class ExampleStepDef extends BaseStepDef {
 
   Then("""^payment details page is displayed\$""") { () =>
     eventually {
-      driver.getTitle should be("Pay your VAT - Pay HMRC - GOV.UK")
+      driver.getTitle should be("Choose a way to pay - Pay your VAT - GOV.UK")
     }
   }
 
