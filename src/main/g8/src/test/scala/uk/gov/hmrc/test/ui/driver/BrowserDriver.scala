@@ -23,10 +23,5 @@ import uk.gov.hmrc.test.ui.conf.TestConfiguration._
 trait BrowserDriver extends LazyLogging {
   logger.info(s"Instantiating Browser: \${sys.props.getOrElse("browser", "'browser' System property not set. This is required")}")
 
-  if (proxyRequired) {
-    logger.info(s"'\${env}' environment requires proxy. Requesting to configure browser proxy.")
-    sys.props += (("proxy.required","true"))
-  }
-
   implicit lazy val driver: WebDriver = SingletonDriver.getInstance()
 }

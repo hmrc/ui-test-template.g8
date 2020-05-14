@@ -17,7 +17,7 @@ $if(!cucumber.truthy)$
 $endif$
 
 libraryDependencies ++= Seq(
-  "uk.gov.hmrc"                %% "webdriver-factory"       % "0.9.0"   % "test",
+  "uk.gov.hmrc"                %% "webdriver-factory"       % "0.11.0"   % "test",
   "org.scalatest"              %% "scalatest"               % "3.0.7" % "test",
   $if(!cucumber.truthy)$
   "org.pegdown"                %  "pegdown"                 % "1.2.1" % "test",
