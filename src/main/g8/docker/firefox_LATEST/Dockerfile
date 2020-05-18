@@ -1,3 +1,4 @@
+#Update this version periodically to match the browser version running in CI pipeline
 FROM selenium/standalone-firefox-debug:3.141.59-20200326
 
 USER root

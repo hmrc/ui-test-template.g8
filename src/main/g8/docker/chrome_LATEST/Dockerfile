@@ -1,3 +1,4 @@
+#Update this version periodically to match the browser version running in CI pipeline
 FROM selenium/standalone-chrome-debug:3.141.59-zirconium
 
 USER root
