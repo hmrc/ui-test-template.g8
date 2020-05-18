@@ -159,8 +159,8 @@ There are test scripts (written in bash) in the `tests/` folder which run UI tes
 - Install Mongo (see Confluence)
 - Install ZAP (see [zaproxy](https://github.com/zaproxy/zaproxy/wiki/Downloads))
 
-Copy `tests/ui-test-template-tests.sh` to the parent directory of your local copy of the ui-test-template.g8 project.  Execute the script without params:
+Copy `tests/test-ui-test-template.sh` to the parent directory of your local copy of the ui-test-template.g8 project.  Execute the script without params:
 
-    ./ui-test-template-tests.sh
+    ./test-ui-test-template.sh
 
 **Note:** At present these tests create different types of projects off the template, and run the UI test off those projects.  No assertions are made to ensure that the test ran and passed, you will have to consult the logs to ensure that the tests ran successfully.

@@ -20,6 +20,24 @@ The `run_tests.sh` script defaults to the `local` environment with the locally i
  - `src/test/resources/application.conf` for **environment** 
  - [webdriver-factory](https://github.com/hmrc/webdriver-factory#2-instantiating-a-browser-with-default-options) for **browser-driver**
  
+## Running tests against a dockerised browser
+To run your tests using the docker images made available by selenium you will need to build the docker images in your local docker registry.  
+
+To do so, run the below command from the appropriate [chrome](docker/chrome_LATEST) or [firefox](docker/firefox_LATEST) directory:  
+
+```bash
+ docker build --tag my-local-chrome .
+ ```
+
+As the tooling we maintain to support local development ([service-manager](https://github.com/hmrc/service-manager)) has been implemented in a way which ties the services we build to a given port at localhost, the browser images need to map the ports these services run on to the **localhost** ip of the host image.
+The [run-browser-with-docker.sh](docker/run-browser-with-docker.sh) script is an example wrapper showing how you can initialise the image to reach all of the services you currently have running in service manager.
+
+
+In this example you can start the browser with the following command:
+```bash
+./run-browser-with-docker.sh my-local-chrome
+``` 
+ 
 #### Running the tests against an environment
 
 To run the tests against an environment set the corresponding `host` environment property as specified under
