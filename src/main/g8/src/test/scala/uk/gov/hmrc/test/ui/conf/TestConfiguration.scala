@@ -33,8 +33,6 @@ object TestConfiguration {
 
   def environmentHost: String = envConfig.getString("services.host")
 
-  def proxyRequired: Boolean = envConfig.getBoolean("proxyRequired")
-
   def servicePort(serviceName: String): String = envConfig.getString(s"services.\$serviceName.port")
 
   def serviceRoute(serviceName: String): String = envConfig.getString(s"services.\$serviceName.productionRoute")

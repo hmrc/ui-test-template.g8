@@ -41,9 +41,7 @@ In this example you can start the browser with the following command:
 #### Running the tests against an environment
 
 To run the tests against an environment set the corresponding `host` environment property as specified under
- `<env>.host.services` in the [application.conf](/src/test/resources/application.conf). For environments where 
- `proxyRequired` is set to `true` in the config, environment proxy is configured automatically using the 
- [webdriver-factory](https://github.com/hmrc/webdriver-factory#executing-against-a-test-environment) library. 
+ `<env>.host.services` in the [application.conf](/src/test/resources/application.conf). 
  
 For example, to execute the `run_tests.sh` script against QA  environment using Chrome remote-webdriver
      
