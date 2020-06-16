@@ -17,8 +17,6 @@ Using the following **test execution frameworks**:
 * Scalatest
 * Cucumber
 
-And also supports execution of tests using BrowserStack.
-
 ## Support
 This repository is supported by HMRC Digital's Test Community.  If you have a query or find an issue please drop in to the #community-testing channel in Slack.
 
@@ -55,88 +53,6 @@ The example test created by this template is quite limited in what it does.  It 
     PAY_FRONTEND
     PAY_API
     IDENTITY_VERIFICATION 
-
-## Available Scaffolds
-### BrowserStack Scaffold
-If you would like to include BrowserStack support in your project you will need to apply the BrowserStack scaffold.  To do this, run the following command from within the project you generated from the template (note that this **DOES** use the giter8 sbt plugin):
-
-```sbtshell
-sbt 'g8Scaffold browserstack'
-```
-
-This will overlay the contents of the `.g8/browserstack` project folder into your UI test project.  
-
-You will then need to make the following changes to your project:
-
-#### 1. Include "browserstack" in Driver.scala
-You will need to the following change to the `src/test/scala/uk/gov/hmrc/test/ui/driver/Driver.scala` object to make use of `src/test/scala/uk/gov/hmrc/test/ui/driver/browsers/BrowserStack.scala`:
-
-```scala
-   ...
-   case Some("remote-firefox") => remoteWebdriverInstance(firefoxOptions)
-   case Some("browserstack") => BrowserStack.initialise()   //include this line
-   case Some(name) => sys.error(s"'browser' property '$name' not recognised.")
-   ...
-```
-
-#### 2. Create a properties file for BrowserStack authentication
-Create the following properties file (**./src/test/resources/browserConfig.properties**) containing your BrowserStack username and automate key (this is _not_ your password):
-
-```properties
-username=
-automatekey=
-```
-
-To get your username and automate key go [here](https://www.browserstack.com/accounts/settings)
-
-Alternatively if you access [www.browserstack.com/automate](http://www.browserstack.com/automate) and select **Username and Access Keys** on the left tab your credentials will be displayed
-
->**Note:** The settings page displays the automate key as the access key.
-
-#### 3. Update the BrowserStack.scala file with your project details
-Then you need to change the projectName and buildName properties in `src/test/scala/uk/gov/hmrc/test/ui/driver/browsers/`.
-
-#### 4. Include any other Browsers you'd like to test with in the src/test/resources/browserstackdata directory
-If you'd like to add a browser for testing via BrowserStack, you'll have to create a JSON file within the `src/test/resources/browserstackdata` folder either of the two following structures:
-
-**Desktop Browser**
-```json
-{
-  "os": "<operating-system>",
-  "os_version": "<>",
-  "browser": "samsung",
-  "browser_version": "",
-  "device": "Samsung Galaxy S8"
-}
-```
-
-**Mobile Browser**      
-```json 
-{
-  "browser":"Chrome",
-  "browser_version":"64.0",
-  "os":"Windows",
-  "os_version":"7"
-}
-```
-**Note:** ideally these should be representing the latest versions of the chosen browser and/or devices.
-
-The json filename must take the form (with **device-name** being optional) `BS_<OS>_<device-name>_<browser>_<browser-version>`.  For example, the following are all appropriately named files:
-
-    BS_Win8_Chrome_v64.json
-    BS_Android_GalaxyS8_v7.json
-    BS_Win10_Edge_v16.json
-
-Once the JSON objects have been created, these need to be added to the run_browserstack.sh script.
-
-#### 5. Running a BrowserStack test from your local development environment
-To run a test using BrowserStack, first execute the **run_browserstackbinary.sh** script (which will now be present in your project root) to download/start the browserstack binary. 
-
-To run the tests, execute the **run_browserstack.sh** script.
-
->**Note 1:** if you only wish to run either the browsers or devices you need to remove the relevant entry from within run_browserstack.sh
-
->**Note 2:** the changes made to browserConfig.properties should not be pushed to GitHub and therefore you should make sure that this file is included on the `.gitignore` file for your project.
 
 ## Development
 If you'd like to contribute to the ui-test-template you'll need to test your changes before raising a PR (see below).  
