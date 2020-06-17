@@ -78,6 +78,8 @@ For example, to execute ZAP tests locally using a Chrome browser
     
 For more information about ZAP tests, please refer to the `zap-automation` [documentation](https://github.com/hmrc/zap-automation/blob/master/README.md).
 
+### Running tests using BrowserStack
+If you would like to run your tests via BrowserStack from your local development environment please refer to the [webdriver-factory](https://github.com/hmrc/webdriver-factory/blob/master/README.md/#user-content-running-tests-using-browser-stack) project.
 
 ## [Installing local driver binaries](#install-driver-binaries)
 
