@@ -18,9 +18,6 @@ logs
 eclipse
 .scala_dependencies
 
-# BrowserStack files
-BrowserStackLocal*
-
 # sbt files
 dist
 target

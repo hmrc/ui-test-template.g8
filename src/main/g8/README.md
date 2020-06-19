@@ -78,6 +78,8 @@ For example, to execute ZAP tests locally using a Chrome browser
     
 For more information about ZAP tests, please refer to the `zap-automation` [documentation](https://github.com/hmrc/zap-automation/blob/master/README.md).
 
+### Running tests using BrowserStack
+If you would like to run your tests via BrowserStack from your local development environment please refer to the [webdriver-factory](https://github.com/hmrc/webdriver-factory/blob/master/README.md/#user-content-running-tests-using-browser-stack) project.
 
 ## [Installing local driver binaries](#install-driver-binaries)
 
@@ -95,16 +97,3 @@ See the `drivers/` directory for some helpful scripts to do the installation wor
 **Note 1:** *You will need to ensure that you have a recent version of Chrome and/or Firefox installed for the later versions of the drivers to work reliably.*
 
 **Note 2** *These scripts use sudo to set the right permissions on the drivers so you will likely be prompted to enter your password.*
-
-## Applying Scaffolds
-This repo comes with scaffolds that are located in the project's `scaffolds/` directory.  
-
-At present only BrowserStack support is provided via g8 scaffolds.  This can be applied to the repo by running the following command from the project root directory:
-
-```sbtshell
-sbt 'g8Scaffold browserstack'
-```
-
-Feel free to delete the `scaffolds/` directory if you have no need for BrowserStack.
-
-More information on the supported Scaffolds can be found in the [ui-test-template.g8 github README.md](https://github.com/hmrc/ui-test-template.g8/blob/master/README.md).
