@@ -4,12 +4,15 @@ name := "$name$"
 
 version := "0.1.0"
 
-scalaVersion := "2.11.11"
+scalaVersion := "2.12.11"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 resolvers += "hmrc-releases" at "https://artefacts.tax.service.gov.uk/artifactory/hmrc-releases/"
 resolvers += Resolver.bintrayRepo("hmrc", "releases")
+
+lazy val testSuite = (project in file("."))
+  .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
 
 $if(!cucumber.truthy)$
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report")
@@ -22,13 +25,12 @@ libraryDependencies ++= Seq(
   $if(!cucumber.truthy)$
   "org.pegdown"                %  "pegdown"                 % "1.2.1" % "test",
   $else$
-  "info.cukes"                 %% "cucumber-scala"          % "1.2.6" % "test",
-  "info.cukes"                 %  "cucumber-junit"          % "1.2.6" % "test",
-  "info.cukes"                 %  "cucumber-picocontainer"  % "1.2.6" % "test",
+  "io.cucumber"                %% "cucumber-scala"          % "6.1.1" % "test",
+  "io.cucumber"                %  "cucumber-junit"          % "6.1.1" % "test",
   "junit"                      %  "junit"                   % "4.12"  % "test",
   "com.novocode"               %  "junit-interface"         % "0.11"  % "test",
   $endif$
-  "uk.gov.hmrc"                %% "zap-automation"          % "2.6.0"  % "test",
+  "uk.gov.hmrc"                %% "zap-automation"          % "2.7.0"  % "test",
   "com.typesafe"               %  "config"                  % "1.3.2"
   )
 
