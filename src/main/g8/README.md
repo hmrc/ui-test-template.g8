@@ -5,7 +5,11 @@ UI test suite for the `<digital service name>` using WebDriver and `<scalatest/c
 
 ## Running the tests
 
-Prior to executing the tests ensure you have the appropriate [drivers installed](#install-driver-binary), install [MongoDB](https://docs.mongodb.com/manual/installation/) and install/configure [service manager](https://github.com/hmrc/service-manager).  
+Prior to executing the tests ensure you have:
+ - Docker - to run a Chrome or Firefox browser inside a container 
+ - Appropriate [drivers installed](#install-driver-binary) - to run tests against locally installed Browser
+ - Installed [MongoDB](https://docs.mongodb.com/manual/installation/) 
+ - Installed/configured [service manager](https://github.com/hmrc/service-manager).  
 
 Run the following command to start services locally:
 
@@ -20,25 +24,23 @@ The `run_tests.sh` script defaults to the `local` environment with the locally i
  - `src/test/resources/application.conf` for **environment** 
  - [webdriver-factory](https://github.com/hmrc/webdriver-factory#2-instantiating-a-browser-with-default-options) for **browser-driver**
  
-## Running tests against a dockerised browser
-To run your tests using the docker images made available by selenium you will need to build the docker images in your local docker registry.  
+## Running tests against a containerised browser - on a developer machine
 
-To do so, run the below command from the appropriate [chrome](docker/chrome_LATEST) or [firefox](docker/firefox_LATEST) directory:  
+The script `./run-browser-with-docker.sh` can be used to start a Chrome or Firefox container on a developer machine. 
+The script requires `remote-chrome` or `remote-firefox` as an argument.
+
+Read more about the script's functionality [here](run-browser-with-docker.sh).
+
+To run against a containerised Chrome browser:
 
 ```bash
- docker build --tag my-local-chrome .
- ```
+./run-browser-with-docker.sh remote-chrome 
+./run_tests.sh local remote-chrome
+```
 
-As the tooling we maintain to support local development ([service-manager](https://github.com/hmrc/service-manager)) has been implemented in a way which ties the services we build to a given port at localhost, the browser images need to map the ports these services run on to the **localhost** ip of the host image.
-The [run-browser-with-docker.sh](docker/run-browser-with-docker.sh) script is an example wrapper showing how you can initialise the image to reach all of the services you currently have running in service manager.
+`./run-browser-with-docker.sh` is **NOT** required when running in a CI environment. 
 
-
-In this example you can start the browser with the following command:
-```bash
-./run-browser-with-docker.sh my-local-chrome
-``` 
- 
-#### Running the tests against an environment
+#### Running the tests against a test environment
 
 To run the tests against an environment set the corresponding `host` environment property as specified under
  `<env>.host.services` in the [application.conf](/src/test/resources/application.conf). 
@@ -74,7 +76,19 @@ tagged as `ZapTests`, via ZAP. Upon completion, the script then triggers a ZAP s
 
 For example, to execute ZAP tests locally using a Chrome browser
  
-    ./run_zap_test.sh local chrome
+```
+./run_zap_test.sh local chrome
+```
+    
+To execute ZAP tests locally using a Chrome browser
+
+```
+./run-browser-with-docker.sh remote-chrome 
+./run_zap_test.sh local remote-chrome
+``` 
+
+`./run-browser-with-docker.sh` is **NOT** required when running in a CI environment.
+        
     
 For more information about ZAP tests, please refer to the `zap-automation` [documentation](https://github.com/hmrc/zap-automation/blob/master/README.md).
 
