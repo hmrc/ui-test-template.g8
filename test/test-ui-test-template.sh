@@ -1,8 +1,5 @@
 #!/bin/bash
 
-CHROME_IMAGE="my-local-chrome"
-FIREFOX_IMAGE="my-local-firefox"
-
 # Check pre-reqs
 if ! hash docker 2>/dev/null; then
   echo "'docker' was not found in PATH.  You will need docker installed to execute these tests.  https://docs.docker.com/install/ "
@@ -25,29 +22,23 @@ fi
 
 start_mongo_container() {
   echo "starting Mongo container"
-  docker run --rm -d --name mongo -p 27017:27017 mongo:3.6
+  if docker ps | grep "mongo"; then
+    echo "Mongo container is already running"
+  else
+    docker run --rm -d --name mongo -p 27017:27017 mongo:3.6
+    echo "Mongo container started"
+  fi
+
 }
 
 start_browser_container() {
-  if [ "$1" = $CHROME_IMAGE ]; then
-    FOLDER="chrome_LATEST"
-  elif [ "$1" = $FIREFOX_IMAGE ]; then
-    FOLDER="firefox_LATEST"
-  fi
-
-  echo "Removing existing image $1 if present"
-  docker image rm "$1"
-
-  echo "Building new $1 image using the Dockerfile generated from the template"
-  docker build docker/$FOLDER -q --tag "$1"
-
   echo "Running script to start $1 container"
-  ./docker/run-browser-with-docker.sh $1
+  ./run-browser-with-docker.sh "$1"
 
   if docker ps | grep "$1"; then
     echo "$1 container started"
   else
-    echo "$1 cotainer failed to start"
+    echo "$1 container failed to start"
     exit 1
   fi
 }
@@ -79,7 +70,7 @@ start_zap() {
 # SETUP
 ## Services
 start_mongo_container
-sm --start UI_TEST_TEMPLATE -f
+sm --start UI_TEST_TEMPLATE -r
 
 # Test 1 - chrome driver, local, scalatest
 g8 file://ui-test-template.g8/ --name=test-1
@@ -92,29 +83,29 @@ rm -rf test-1
 # Test 2 - chrome docker, local, scalatest
 g8 file://ui-test-template.g8/ --name=test-2
 cd test-2 || exit
-start_browser_container $CHROME_IMAGE
+start_browser_container remote-chrome
 ./run_tests.sh local remote-chrome
 cd - || exit
 rm -rf test-2
-docker kill $CHROME_IMAGE
+docker stop remote-chrome
 
 # Test 3 - chrome docker, local, cucumber
 g8 file://ui-test-template.g8/ --name=test-3 --cucumber=true
 cd test-3 || exit
-start_browser_container $CHROME_IMAGE
+start_browser_container remote-chrome
 ./run_tests.sh local remote-chrome
 cd - || exit
 rm -rf test-3
-docker kill $CHROME_IMAGE
+docker stop remote-chrome
 
 # Test 4 - firefox docker, local, cucumber
 g8 file://ui-test-template.g8/ --name=test-4 --cucumber=true
 cd test-4 || exit
-start_browser_container $FIREFOX_IMAGE
+start_browser_container remote-firefox
 ./run_tests.sh local remote-firefox
 cd - || exit
 rm -rf test-4
-docker kill $FIREFOX_IMAGE
+docker stop remote-firefox
 
 # Test 5 - firefox driver, local, cucumber
 g8 file://ui-test-template.g8/ --name=test-5 --cucumber=true
@@ -144,4 +135,4 @@ rm -rf test-7
 
 # TEAR DOWN
 sm --stop UI_TEST_TEMPLATE
-docker kill mongo
+docker stop mongo
