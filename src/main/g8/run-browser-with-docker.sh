@@ -20,7 +20,7 @@
 port_mappings=\$(sm -s | grep PASS | awk '{ print \$12"->"\$12 }' | paste -sd "," -)
 port_mappings="\$port_mappings,11000->11000"
 
-# Alternately, port_mappings can be explicitly initialised as below:
+# Alternatively, port_mappings can be explicitly initialised as below:
 #port_mappings="9032->9032,9250->9250,9080->9080"
 
 #######################################
