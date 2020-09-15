@@ -67,6 +67,16 @@ start_zap() {
   sleep 5
 
 }
+
+initialize_repo() {
+  #The repo uses sbtAutoBuildPlugin which requires repository.yaml, licence.txt and an initial git local commit to compile
+  cp $WORKSPACE/ui-test-template.g8/repository.yaml .
+  cp $WORKSPACE/ui-test-template.g8/LICENSE .
+  git init
+  git add .
+  git commit -m "initial commit"
+}
+
 # SETUP
 ## Services
 start_mongo_container
@@ -76,6 +86,7 @@ sm --start UI_TEST_TEMPLATE -r
 g8 file://ui-test-template.g8/ --name=test-1
 (
   cd test-1 || exit
+  initialize_repo
   ./run_tests.sh
 )
 rm -rf test-1
@@ -83,6 +94,7 @@ rm -rf test-1
 # Test 2 - chrome docker, local, scalatest
 g8 file://ui-test-template.g8/ --name=test-2
 cd test-2 || exit
+initialize_repo
 start_browser_container remote-chrome
 ./run_tests.sh local remote-chrome
 cd - || exit
@@ -92,6 +104,7 @@ docker stop remote-chrome
 # Test 3 - chrome docker, local, cucumber
 g8 file://ui-test-template.g8/ --name=test-3 --cucumber=true
 cd test-3 || exit
+initialize_repo
 start_browser_container remote-chrome
 ./run_tests.sh local remote-chrome
 cd - || exit
@@ -101,6 +114,7 @@ docker stop remote-chrome
 # Test 4 - firefox docker, local, cucumber
 g8 file://ui-test-template.g8/ --name=test-4 --cucumber=true
 cd test-4 || exit
+initialize_repo
 start_browser_container remote-firefox
 ./run_tests.sh local remote-firefox
 cd - || exit
@@ -111,6 +125,7 @@ docker stop remote-firefox
 g8 file://ui-test-template.g8/ --name=test-5 --cucumber=true
 (
   cd test-5 || exit
+  initialize_repo
   ./run_tests.sh local firefox
 )
 rm -rf test-5
@@ -120,6 +135,7 @@ start_zap
 g8 file://ui-test-template.g8/ --name=test-6
 (
   cd test-6 || exit
+  initialize_repo
   ./run_zap_tests.sh local chrome
 )
 rm -rf test-6
@@ -129,6 +145,7 @@ start_zap
 g8 file://ui-test-template.g8/ --name=test-7 --cucumber=true
 (
   cd test-7 || exit
+  initialize_repo
   ./run_zap_tests.sh local firefox
 )
 rm -rf test-7
