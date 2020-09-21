@@ -9,6 +9,6 @@ lazy val testSuite = (project in file("."))
     libraryDependencies ++= Dependencies.test,
     $if(cucumber.truthy)$
       //The testOptions from SbtAutoBuildPlugin supports only ScalaTest. Resetting testOptions for Cucumber Tests.
-      testOptions in Test := Seq.empty,
+      testOptions in Test := Seq.empty
     $endif$
   )
