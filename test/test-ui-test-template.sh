@@ -80,7 +80,7 @@ initialize_repo() {
 # SETUP
 ## Services
 start_mongo_container
-sm --start UI_TEST_TEMPLATE -r
+sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -f
 
 # Test 1 - chrome driver, local, scalatest
 g8 file://ui-test-template.g8/ --name=test-1
