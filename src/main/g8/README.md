@@ -11,10 +11,13 @@ Prior to executing the tests ensure you have:
  - Installed [MongoDB](https://docs.mongodb.com/manual/installation/) 
  - Installed/configured [service manager](https://github.com/hmrc/service-manager).  
 
+
+When running these example tests locally, Chrome requires the additional `appendArgs` to be set otherwise the tests will fail. This is due to payments which is used in the examples having specific cross site settings in order for the Barclaycard iframe to work.
+
 Run the following command to start services locally:
 
     sudo mongod
-    sm --start UI_TEST_TEMPLATE -f
+    sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -f
 
 Then execute the `run_tests.sh` script:
     
