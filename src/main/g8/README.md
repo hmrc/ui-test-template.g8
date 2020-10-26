@@ -6,17 +6,16 @@ UI test suite for the `<digital service name>` using WebDriver and `<scalatest/c
 ## Running the tests
 
 Prior to executing the tests ensure you have:
- - Docker - to run a Chrome or Firefox browser inside a container 
- - Appropriate [drivers installed](#install-driver-binary) - to run tests against locally installed Browser
- - Installed [MongoDB](https://docs.mongodb.com/manual/installation/) 
+ - Docker - to run mongo and browser (Chrome or Firefox) inside a container 
+ - Appropriate [drivers installed](#installing-local-driver-binaries) - to run tests against locally installed Browser
  - Installed/configured [service manager](https://github.com/hmrc/service-manager).  
 
 When running these example tests locally, Chrome requires the additional `appendArgs` to be set otherwise the tests will fail. This is due to payments which is used in the examples having specific cross site settings in order for the Barclaycard iframe to work.
 
 Run the following command to start services locally:
 
-    sudo mongod
-    sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -f
+    docker run --rm -d --name mongo -d -p 27017:27017 mongo:3.6
+    sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -r
 
 Then execute the `run_tests.sh` script:
     
@@ -97,7 +96,7 @@ For more information about ZAP tests, please refer to the `zap-automation` [docu
 ### Running tests using BrowserStack
 If you would like to run your tests via BrowserStack from your local development environment please refer to the [webdriver-factory](https://github.com/hmrc/webdriver-factory/blob/master/README.md/#user-content-running-tests-using-browser-stack) project.
 
-## [Installing local driver binaries](#install-driver-binaries)
+## Installing local driver binaries
 
 This project supports UI test execution using Firefox (Geckodriver) and Chrome (Chromedriver) browsers. 
 
