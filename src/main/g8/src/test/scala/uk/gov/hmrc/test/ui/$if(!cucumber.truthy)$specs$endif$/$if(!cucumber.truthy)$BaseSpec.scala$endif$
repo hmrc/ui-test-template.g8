@@ -22,4 +22,15 @@ trait BaseSpec extends AnyFeatureSpec
   override def afterAll() {
     Try(SingletonDriver.closeInstance)
   }
+
+  override def withFixture(test: NoArgTest): Outcome = {
+    val fixture = super.withFixture(test)
+    if (!fixture.isSucceeded) {
+      val screenshotName = test.name.replaceAll(" ", "_").replaceAll(":", "") + ".png"
+      setCaptureDir("./target/test-reports/html-report/screenshots/")
+      capture to screenshotName
+      markup(s"<img src='screenshots/\$screenshotName' />")
+    }
+    fixture
+  }
 }
