@@ -8,9 +8,9 @@ class ExampleSpec extends BaseSpec {
 
   info("Example Spec using ScalaTest")
 
-  feature("User accessing payments page") {
+  Feature("User accessing payments page") {
 
-    scenario("A logged in user is able to access payment details page", ZapTests) { //Remove ZapTests tag if not required
+    Scenario("A logged in user is able to access payment details page", ZapTests) { //Remove ZapTests tag if not required
 
       Given("A logged in user accesses payments page")
 

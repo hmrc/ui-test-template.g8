@@ -4,7 +4,9 @@ object Dependencies {
 
   val test = Seq(
     "uk.gov.hmrc"                %% "webdriver-factory"       % "0.13.0" % Test,
-    "org.scalatest"              %% "scalatest"               % "3.0.7"  % Test,
+    "org.scalatest"              %% "scalatest"               % "3.2.0"   % Test,
+    "org.scalatestplus"          %% "selenium-3-141"          % "3.2.0.0" % Test,
+    "com.vladsch.flexmark"       %  "flexmark-all"            % "0.35.10" % Test,
     $if(!cucumber.truthy)$
       "org.pegdown"                %  "pegdown"                 % "1.2.1" % Test,
     $else$
