@@ -21,7 +21,6 @@ import uk.gov.hmrc.test.ui.pages.{ExamplePage, PayOnlinePage}
 class ExampleStepDef extends BaseStepDef {
 
   Given("""^a user logs in to access payments page\$""") { () =>
-
     driver.navigate().to(ExamplePage.url)
 
     driver.findElement(By.name("redirectionUrl")).clear()
