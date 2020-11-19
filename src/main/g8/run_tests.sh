@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 ENV=\${1:-local}
 BROWSER=\${2:-chrome}
 DRIVER=
@@ -8,6 +8,9 @@ if [ "\$BROWSER" = "chrome" ]; then
 elif [ "\$BROWSER" = "firefox" ]; then
     DRIVER="-Dwebdriver.gecko.driver=/usr/local/bin/geckodriver"
 fi
+
+# Scalafmt checks have been separated from the test command to avoid OutOfMemoryError in Jenkins
+sbt scalafmtCheckAll scalafmtSbtCheck
 
 $if(cucumber.truthy)$
 sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER "testOnly uk.gov.hmrc.test.ui.cucumber.runner.Runner"
