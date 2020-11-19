@@ -30,9 +30,9 @@ if [ -z "\${1}" ]; then
   echo "ERROR: Browser type not specified. Re-run the script with the option remote-chrome or remote-firefox."
   exit 1
 elif [ "\${1}" = "remote-chrome" ]; then
-  BROWSER="artefacts.tax.service.gov.uk/chrome-with-rinetd:83.0.4103.61-latest"
+  BROWSER="artefacts.tax.service.gov.uk/chrome-with-rinetd:latest"
 elif [ "\${1}" = "remote-firefox" ]; then
-  BROWSER="artefacts.tax.service.gov.uk/firefox-with-rinetd:76.0.1-latest"
+  BROWSER="artefacts.tax.service.gov.uk/firefox-with-rinetd:latest"
 fi
 
 #######################################
