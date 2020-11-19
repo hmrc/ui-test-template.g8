@@ -112,3 +112,20 @@ See the `drivers/` directory for some helpful scripts to do the installation wor
 **Note 1:** *You will need to ensure that you have a recent version of Chrome and/or Firefox installed for the later versions of the drivers to work reliably.*
 
 **Note 2** *These scripts use sudo to set the right permissions on the drivers so you will likely be prompted to enter your password.*
+
+### Scalafmt
+ This repository uses [Scalafmt](https://scalameta.org/scalafmt/), a code formatter for Scala. The formatting rules configured for this repository are defined within [.scalafmt.conf](.scalafmt.conf).
+ 
+ To apply formatting to this repository using the configured rules in [.scalafmt.conf](.scalafmt.conf) execute:
+ 
+ ```
+ sbt scalafmtAll
+ ```
+ 
+ To check files have been formatted as expected execute:
+ 
+ ```
+ sbt scalafmtCheckAll scalafmtSbtCheck
+ ```
+
+[Visit the official Scalafmt documentation to view a complete list of tasks which can be run.](https://scalameta.org/scalafmt/docs/installation.html#task-keys)
