@@ -50,3 +50,6 @@ echo "Test 1 :: Test with $BROWSER_TYPE"
 
 echo "Test 2 :: Test with ZAP"
 ./run_zap_tests.sh local $BROWSER_TYPE
+
+echo "Clearing ZAP session for any subsequent test"
+curl http://localhost:11000/JSON/core/action/newSession/?name=&overwrite=
