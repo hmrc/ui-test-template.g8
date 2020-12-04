@@ -64,22 +64,47 @@ To create a test project from your local changes, execute the following command 
 
 This will create a new UI test project in a folder named `my-test-project/`.  
  
-### Running the ui-test-template.g8 tests
-There are test scripts (written in bash) in the `tests/` folder which run UI tests against serveral combinations of browser->test-runner->test-environment.  To successfully run the tests you will need to satisfy the following pre-requisites: 
+### Testing the template
+The repository provides two scripts to test the template:
+- [test-in-local-environment.sh](test-in-local-environment.sh) - To test the changes locally
+- [test-in-ci.sh](test-in-ci.sh) - A small set of tests to run in CI environment
+
+#### Testing Locally 
+The bash script [test-ui-test-template-locally.sh](test-in-local-environment.sh) is intended to run locally in an engineer's machine.
+ The script is not suitable to run in a CI environment. The script generates a new repository from this template and runs
+  the UI Journeys and ZAP tests available in the test repository for different browsers and test-runner configuration. 
+ 
+To successfully run the tests you will need to satisfy the following pre-requisites: 
 
 - [Install Giterate CLI](#install-giterate)
 - Install [Docker]()
-- Build the latest HMRC Digital Chrome and Firefox images (see Confluence)
 - Install chromedriver and geckodriver (reference the project [README.md](./src/main/g8/README.md) )
 - Install and configure [Service Manager](https://github.com/hmrc/service-manager) (see Confluence)
 - Install Mongo (see Confluence)
-- Install ZAP (see [zaproxy](https://github.com/zaproxy/zaproxy/wiki/Downloads))
+- Install ZAP (see Confluence)
 
-Copy `tests/test-ui-test-template.sh` to the parent directory of your local copy of the ui-test-template.g8 project.  Execute the script without params:
+Copy `test-in-local-environment.sh` to the parent directory of your local copy of the ui-test-template.g8 project. 
+ Execute the script without params:
 
-    ./test-ui-test-template.sh
+```
+./test-in-local-environment.sh
+```
 
-**Note:** At present these tests create different types of projects off the template, and run the UI test off those projects.  No assertions are made to ensure that the test ran and passed, you will have to consult the logs to ensure that the tests ran successfully.
+**Note:** At present these tests create different types of projects off the template, and run the UI test off those projects. 
+ No assertions are made to ensure that the test ran and passed, you will have to consult the logs to ensure that the tests 
+ ran successfully.
+ 
+#### Testing in CI
+The bash script [test-in-ci.sh](test-in-ci.sh) is used to test the ui-test-template.g8 template
+ in a pipeline via a PR builder before merging changes to master. The script generates a new repository for the
+  provided template type, and runs UI Journeys and ZAP tests against locally running services for the provided browser type.
+  
+```
+./test-in-ci.sh cucumber remote-chrome
+```
+
+While this script can be also used to run locally in an engineer's machine it does not provide the necessary set up by default.
+Use [test-ui-test-template-locally.sh](test-in-local-environment.sh) instead.  
 
 ### Scalafmt
 The generated template has already been formatted using scalafmt as well as containing a `.scalafmt.conf` configuration and sbt scalafmt plugin ready for teams to use. 

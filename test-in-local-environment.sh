@@ -68,6 +68,10 @@ start_zap() {
 
 }
 
+shutdown_zap() {
+  curl http://localhost:11000/JSON/core/action/shutdown/?
+}
+
 initialize_repo() {
   #The repo uses sbtAutoBuildPlugin which requires repository.yaml, licence.txt and an initial git local commit to compile
   cp $WORKSPACE/ui-test-template.g8/repository.yaml .
@@ -80,7 +84,7 @@ initialize_repo() {
 # SETUP
 ## Services
 start_mongo_container
-sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -f
+sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -r
 
 # Test 1 - chrome driver, local, scalatest
 g8 file://ui-test-template.g8/ --name=test-1
@@ -138,6 +142,7 @@ g8 file://ui-test-template.g8/ --name=test-6
   initialize_repo
   ./run_zap_tests.sh local chrome
 )
+shutdown_zap
 rm -rf test-6
 
 # Test 7 - zap, firefox driver, local, cucumber
@@ -148,6 +153,7 @@ g8 file://ui-test-template.g8/ --name=test-7 --cucumber=true
   initialize_repo
   ./run_zap_tests.sh local firefox
 )
+shutdown_zap
 rm -rf test-7
 
 # TEAR DOWN
