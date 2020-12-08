@@ -57,7 +57,7 @@ The example test created by this template is quite limited in what it does.  It 
 ## Development
 If you'd like to contribute to the ui-test-template you'll need to test your changes before raising a PR (see below).  
 
-### Generating a UI Test project from you local changes
+### Generating a UI test project from your local changes
 To create a test project from your local changes, execute the following command from the parent directory of your local copy of the template:
 
     g8 file://ui-test-template.g8/ --name=my-test-project --cucumber=true
@@ -107,6 +107,6 @@ While this script can be also used to run locally in an engineer's machine it do
 Use [test-ui-test-template-locally.sh](test-in-local-environment.sh) instead.  
 
 ### Scalafmt
-The generated template has already been formatted using scalafmt as well as containing a `.scalafmt.conf` configuration and sbt scalafmt plugin ready for teams to use. 
+The generated template has already been formatted using `scalafmt` as well as containing a `.scalafmt.conf` configuration and sbt `scalafmt` plugin ready for teams to use. 
 
-Currently formatting the files to include in a generated project is a manual task. This involves generating a new template from this project, formatting the generated files and then updating this repository to reflect the new formatting.
+Currently, formatting the files to include in a generated project is a manual task. This involves generating a new template from this project, formatting the generated files and then updating this repository to reflect the new formatting.
