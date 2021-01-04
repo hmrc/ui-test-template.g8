@@ -83,9 +83,7 @@ To successfully run the tests you will need to satisfy the following pre-requisi
 - Install Mongo (see Confluence)
 - Install ZAP (see Confluence)
 
-Copy `test-in-local-environment.sh` to the parent directory of your local copy of the ui-test-template.g8 project. 
- Execute the script without params:
-
+Execute the script without params:
 ```
 ./test-in-local-environment.sh
 ```
