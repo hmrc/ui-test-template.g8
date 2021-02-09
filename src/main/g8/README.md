@@ -15,7 +15,9 @@ When running these example tests locally, Chrome requires the additional `append
 Run the following command to start services locally:
 
     docker run --rm -d --name mongo -d -p 27017:27017 mongo:3.6
-    sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -r
+    sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -r --wait 100
+
+Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.
 
 Then execute the `run_tests.sh` script:
     
