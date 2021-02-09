@@ -53,7 +53,7 @@ setup_local_environment() {
   fi
 
   print "INFO: Starting SM profile"
-  sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -r
+  sm --start UI_TEST_TEMPLATE --appendArgs '{"PAY_FRONTEND":["-Dplay.http.session.sameSite=Lax"]}' -r --wait 100
 }
 
 generate_test_repo() {

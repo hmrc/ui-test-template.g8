@@ -18,7 +18,7 @@
 #
 # When does the test fail in CI?
 # When running in CI, Jenkins relies on the exit code from this script to mark the build as failed.
-# - When the templated is not created successfully
+# - When the template is not created successfully
 # - When Journey test or ZAP tests returns a failure
 #
 # How to run the tests locally?
