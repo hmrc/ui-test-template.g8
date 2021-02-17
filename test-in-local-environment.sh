@@ -131,7 +131,7 @@ run_scalatest_tests() {
 }
 
 run_cucumber_tests() {
-  generate_test_repo --name=cucumber-repo
+  generate_test_repo --name=cucumber-repo --cucumber=true
 
   print "INFO: Test 4 - chrome docker, local, cucumber"
   cd "$SANDBOX/cucumber-repo"
