@@ -20,7 +20,7 @@ import uk.gov.hmrc.test.ui.pages.{ExamplePage, PayOnlinePage}
 
 class ExampleStepDef extends BaseStepDef {
 
-  Given("""^a user logs in to access payments page\$""") { () =>
+  Given("a user logs in to access payments page") { () =>
     driver.navigate().to(ExamplePage.url)
 
     driver.findElement(By.name("redirectionUrl")).clear()
@@ -32,16 +32,16 @@ class ExampleStepDef extends BaseStepDef {
     }
   }
 
-  Given("""^a user navigates to payments page\$""") { () =>
+  Given("a user navigates to payments page") { () =>
     driver.navigate().to(PayOnlinePage.url)
   }
 
-  When("""^the user chooses to pay VAT tax\$""") { () =>
+  When("the user chooses to pay VAT tax") { () =>
     driver.findElement(By.id("vat")).click()
     driver.findElement(By.id("next")).click()
   }
 
-  Then("""^payment details page is displayed\$""") { () =>
+  Then("payment details page is displayed") { () =>
     eventually {
       driver.getTitle should be("Choose a way to pay - Pay your VAT - GOV.UK")
     }
