@@ -37,7 +37,8 @@ class ExampleStepDef extends BaseStepDef {
   }
 
   When("the user chooses to pay VAT tax") { () =>
-    driver.findElement(By.id("vat")).click()
+    val vatId = "tax_to_pay-2"
+    driver.findElement(By.id(vatId)).click()
     driver.findElement(By.id("next")).click()
   }
 

@@ -36,7 +36,7 @@ object ExamplePage extends BasePage {
 
   def login(redirectionUrl: String)(implicit driver: WebDriver): Unit = {
     textField("redirectionUrl").value = redirectionUrl
-    singleSel("confidenceLevel").value = "100"
+    singleSel("confidenceLevel").value = "50"
     singleSel("affinityGroup").value = "Individual"
     textField("nino").value = "MA000003A"
     click on CssSelectorQuery(".button")

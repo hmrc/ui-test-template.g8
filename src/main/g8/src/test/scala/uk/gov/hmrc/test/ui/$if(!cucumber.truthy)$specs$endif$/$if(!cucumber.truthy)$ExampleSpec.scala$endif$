@@ -23,7 +23,8 @@ class ExampleSpec extends BaseSpec {
       }
 
       When("User chooses to pay VAT tax")
-      click on radioButton("vat")
+      val vatId = "tax_to_pay-2"
+      click on radioButton(vatId)
       click on "next"
       eventually {
         pageTitle shouldBe "Choose a way to pay - Pay your VAT - GOV.UK"
