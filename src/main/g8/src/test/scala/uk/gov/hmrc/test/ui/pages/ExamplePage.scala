@@ -39,7 +39,7 @@ object ExamplePage extends BasePage {
     singleSel("confidenceLevel").value = "50"
     singleSel("affinityGroup").value = "Individual"
     textField("nino").value = "MA000003A"
-    click on CssSelectorQuery(".button")
+    click on "submit"
   }
 
 }
