@@ -54,7 +54,8 @@ For example, to execute the `run_tests.sh` script against QA  environment using 
 
 ## Running ZAP tests
 
-ZAP tests can be automated using the HMRC [zap-automation](https://github.com/hmrc/zap-automation) library. It is not mandatory to do so and should not be considered a substitute for manual exploratory testing using OWASP ZAP.
+ZAP tests can be automated using the HMRC Dynamic Application Security Testing approach. Running 
+automated ZAP tests should not be considered a substitute for manual exploratory testing using OWASP ZAP.
 
 #### Tagging tests for ZAP
 
@@ -65,17 +66,12 @@ It is not required to proxy every journey test via ZAP. The intention of proxyin
 #### Configuring the browser to proxy via ZAP 
 
 Setting the system property `zap.proxy=true` configures the browser specified in `browser` property to proxy via ZAP. 
-This is achieved using [webdriver-factory](https://github.com/hmrc/webdriver-factory#proxying-trafic-via-zap).  
-
-#### zap-automation config
-Running ZAP tests require passing a zap-automation config object to the zap-automation library. `zap-automation` config is 
-defined in the [application.conf](/src/test/resources/application.conf). The config is passed to the `zap-automation`
-library via [ZapSpec](/src/test/scala/uk/gov/hmrc/test/ui/ZapSpec.scala) from which the ZAP tests are triggered.
+This is achieved using [webdriver-factory](https://github.com/hmrc/webdriver-factory#proxying-trafic-via-zap).
 
 #### Executing a ZAP test
 
-The shell script `run_zap_tests.sh` is available to execute ZAP tests. The script first proxies a set of journey tests, 
-tagged as `ZapTests`, via ZAP. Upon completion, the script then triggers a ZAP scan for the provided `zap-automation` config. 
+The shell script `run_zap_tests.sh` is available to execute ZAP tests. The script proxies a set of journey tests, 
+tagged as `ZapTests`, via ZAP.  
 
 For example, to execute ZAP tests locally using a Chrome browser
  
@@ -83,7 +79,7 @@ For example, to execute ZAP tests locally using a Chrome browser
 ./run_zap_test.sh local chrome
 ```
     
-To execute ZAP tests locally using a Chrome browser
+To execute ZAP tests locally using a remote-chrome browser
 
 ```
 ./run-browser-with-docker.sh remote-chrome 
@@ -91,9 +87,6 @@ To execute ZAP tests locally using a Chrome browser
 ``` 
 
 `./run-browser-with-docker.sh` is **NOT** required when running in a CI environment.
-        
-    
-For more information about ZAP tests, please refer to the `zap-automation` [documentation](https://github.com/hmrc/zap-automation/blob/master/README.md).
 
 ### Running tests using BrowserStack
 If you would like to run your tests via BrowserStack from your local development environment please refer to the [webdriver-factory](https://github.com/hmrc/webdriver-factory/blob/master/README.md/#user-content-running-tests-using-browser-stack) project.

@@ -127,6 +127,7 @@ run_scalatest_tests() {
   print "INFO: Test 3 - zap, chrome driver, local, scalatest"
   start_zap
   ./run_zap_tests.sh local chrome
+  check_if_url_is_proxied_via_ZAP
   clear_zap_session
 }
 
@@ -150,6 +151,7 @@ run_cucumber_tests() {
 
   print "INFO: Test 7 - zap, firefox driver, local, cucumber"
   ./run_zap_tests.sh local firefox
+  check_if_url_is_proxied_via_ZAP
   clear_zap_session
 }
 
@@ -160,6 +162,15 @@ tear_down() {
   docker stop mongo
   print "INFO: Shutdown ZAP"
   curl http://localhost:11000/JSON/core/action/shutdown/?
+}
+
+check_if_url_is_proxied_via_ZAP() {
+  print "INFO: Checking if localhost:9949 URL proxied via ZAP"
+  proxied_urls=$(curl -s http://localhost:11000/JSON/core/view/urls/?baseurl=)
+  if [[ "$proxied_urls" != *"localhost:9949"* ]]; then
+     print "ERROR: localhost:9949 is not in the list of URLs proxied via ZAP. Check if browser proxy is configured correctly."
+     exit 1
+  fi
 }
 
 check_prerequisites

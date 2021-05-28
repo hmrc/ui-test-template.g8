@@ -19,5 +19,3 @@ $else$
 # -n ZapTests Runs only the tests tagged as ZapTests.
 sbt -Dbrowser=\$BROWSER -Denvironment=\$ENV \$DRIVER -Dzap.proxy=true "testOnly uk.gov.hmrc.test.ui.specs.* -- -n ZapTests"
 $endif$
-
-sbt "testOnly uk.gov.hmrc.test.ui.ZapSpec"
